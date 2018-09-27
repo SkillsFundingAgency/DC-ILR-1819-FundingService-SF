@@ -103,8 +103,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ESF 1819 Funding Calc.zip" />
     <None Include="ESFA.DC.ILR.FundingService.FM70.Service.Tests.ruleset" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Rulebase\ESF 1819 Funding Calc.zip" />
+    <None Include="Rulebase\XSRC\Input.xsrc" />
+    <None Include="Rulebase\XSRC\Interim.xsrc" />
+    <None Include="Rulebase\XSRC\Output.xsrc" />
+    <None Include="Rulebase\XSRC\Parameters.xsrc" />
+    <None Include="XSRC\Input.xsrc" />
+    <None Include="XSRC\Interim.xsrc" />
+    <None Include="XSRC\Output.xsrc" />
+    <None Include="XSRC\Parameters.xsrc" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

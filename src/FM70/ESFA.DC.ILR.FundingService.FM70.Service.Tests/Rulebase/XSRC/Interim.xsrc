@@ -1,0 +1,1094 @@
+<root schema-version="1" product-version="10.4.6.76">
+  <entities>
+    <entity ref="global">
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="Learner">
+      <attribute name="p185" type="number" public-name="LearnerEmpStatCodes">
+        <text>
+          <base>the learner's employment status codes</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learningdeliveries" containment-parent-id="learner" public-id="LearningDelivery">
+      <attribute name="b1" type="boolean" public-name="HasValidAssessmentAim">
+        <text>
+          <base>the learning delivery has a valid assessment aim</base>
+          <parse>s(ver('10.4.6.76'),v(have,t(simple,present,normal)),sb('the learning delivery',singular),o('a valid assessment aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b3" type="boolean" public-name="IntermediateHasBeenAchieved">
+        <text>
+          <base>the learning delivery (intermediary) has been achieved</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,perfect)),sb('the learning delivery (intermediary)',singular),o('achieved'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b4" type="boolean" public-name="LearningCompleted">
+        <text>
+          <base>the learning delivery has been completed</base>
+          <parse>s(ver('10.4.5.40'),v(complete,t(simple,present,perfect)),ob('the learning delivery',singular))</parse>
+        </text>
+      </attribute>
+      <attribute name="b5" type="boolean" public-name="IsRegulatedAim">
+        <text>
+          <base>the learning delivery is a regulated aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a regulated aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b6" type="boolean" public-name="IsNonRegulatedAim">
+        <text>
+          <base>the learning delivery is a non-regulated aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a non-regulated aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p2" type="currency" public-name="AssessmentAimValue">
+        <text>
+          <base>the learning delivery's assessment aim value</base>
+        </text>
+      </attribute>
+      <attribute name="p3" type="currency" public-name="RegulatedOrNonRegulatedAimValue">
+        <text>
+          <base>the learning delivery's (non)regulated aim value</base>
+        </text>
+      </attribute>
+      <attribute name="b7" type="boolean" public-name="AssessmentAndStartForFundingPurposes">
+        <text>
+          <base>the learning delivery is an assessment and a start for funding purposes</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an assessment and a start for funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p9" type="date" public-name="FirstDayOfStartMonth">
+        <text>
+          <base>the learning delivery's first day of the start month</base>
+        </text>
+      </attribute>
+      <attribute name="p10" type="date" public-name="LastDayOfStartMonth">
+        <text>
+          <base>the learning delivery's last day of the start month</base>
+        </text>
+      </attribute>
+      <attribute name="b13" type="boolean" public-name="IsAssessmentAim">
+        <text>
+          <base>the learning delivery is an assessment aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an assessment aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b14" type="boolean" public-name="IsRegulatedOrNonRegulatedAndStartForFundingPurposes">
+        <text>
+          <base>the learning delivery is (non)regulated and a start for funding purposes</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('(non)regulated and a start for funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p14" type="date" public-name="FirstDayOfAchievementMonth">
+        <text>
+          <base>the learning delivery's first day of the achievement month</base>
+        </text>
+      </attribute>
+      <attribute name="p15" type="date" public-name="LastDayOfAchievementMonth">
+        <text>
+          <base>the learning delivery's last day of the achievement month</base>
+        </text>
+      </attribute>
+      <attribute name="b19" type="boolean" public-name="PG01ShouldBeCreated">
+        <text>
+          <base>deliverable PG01 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG01',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b23" type="boolean" public-name="SU01ShouldBeCreated">
+        <text>
+          <base>deliverable SU01 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU01',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b25" type="boolean" public-name="FS01ShouldBeCreated">
+        <text>
+          <base>deliverable FS01 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable FS01',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p33" type="date" public-name="EarliestNonRegulatedStartDate">
+        <text>
+          <base>the learning delivery's earliest (non) regulated start date</base>
+        </text>
+      </attribute>
+      <attribute name="b33" type="boolean" public-name="SU11ShouldBeCreated">
+        <text>
+          <base>deliverable SU11 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU11',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b34" type="boolean" public-name="SU21ShouldBeCreated">
+        <text>
+          <base>deliverable SU21 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU21',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b35" type="boolean" public-name="PG02ShouldBeCreated">
+        <text>
+          <base>deliverable PG02 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG02',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b36" type="boolean" public-name="SU02ShouldBeCreated">
+        <text>
+          <base>deliverable SU02 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU02',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b37" type="boolean" public-name="SU12ShouldBeCreated">
+        <text>
+          <base>deliverable SU12 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU12',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b38" type="boolean" public-name="SU22ShouldBeCreated">
+        <text>
+          <base>deliverable SU22 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU22',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b39" type="boolean" public-name="PG03ShouldBeCreated">
+        <text>
+          <base>deliverable PG03 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG03',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b40" type="boolean" public-name="SU03ShouldBeCreated">
+        <text>
+          <base>deliverable SU03 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU03',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b41" type="boolean" public-name="SU13ShouldBeCreated">
+        <text>
+          <base>deliverable SU13 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU13',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b42" type="boolean" public-name="SU23ShouldBeCreated">
+        <text>
+          <base>deliverable SU23 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU23',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b43" type="boolean" public-name="PG04ShouldBeCreated">
+        <text>
+          <base>deliverable PG04 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG04',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b44" type="boolean" public-name="SU04ShouldBeCreated">
+        <text>
+          <base>deliverable SU04 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU04',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b45" type="boolean" public-name="SU14ShouldBeCreated">
+        <text>
+          <base>deliverable SU14 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU14',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b46" type="boolean" public-name="SU24ShouldBeCreated">
+        <text>
+          <base>deliverable SU24 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU24',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b47" type="boolean" public-name="PG05ShouldBeCreated">
+        <text>
+          <base>deliverable PG05 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG05',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b48" type="boolean" public-name="SU05ShouldBeCreated">
+        <text>
+          <base>deliverable SU05 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU05',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b49" type="boolean" public-name="SU15ShouldBeCreated">
+        <text>
+          <base>deliverable SU15 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU15',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b50" type="boolean" public-name="SU25ShouldBeCreated">
+        <text>
+          <base>deliverable SU25 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable SU25',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b51" type="boolean" public-name="PG06ShouldBeCreated">
+        <text>
+          <base>deliverable PG06 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable PG06',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p37" type="number" public-name="DaysInLearning">
+        <text>
+          <base>the learning delivery's planned number of days in learning</base>
+        </text>
+      </attribute>
+      <attribute name="p38" type="date" public-name="AdjustedEndDate">
+        <text>
+          <base>the learning delivery's adjusted end date</base>
+        </text>
+      </attribute>
+      <attribute name="p39" type="date" public-name="EarlierRelevantEndDate">
+        <text>
+          <base>the learning delivery's earlier relevant end date</base>
+        </text>
+      </attribute>
+      <attribute name="b53" type="boolean" public-name="RQ01StartShouldBeCreated">
+        <text>
+          <base>deliverable RQ01 (start) should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable RQ01 (start)',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b54" type="boolean" public-name="EarliestRegulatedAim">
+        <text>
+          <base>the learning delivery is the earliest regulated aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('the earliest regulated aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b55" type="boolean" public-name="IsEarliestNonRegulatedAim">
+        <text>
+          <base>the learning delivery is the earliest non-regulated aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('the earliest non-regulated aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b56" type="boolean" public-name="NR01StartShouldBeCreated">
+        <text>
+          <base>deliverable NR01 (start) should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable NR01 (start)',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p40" type="currency" public-name="InterimPG01Earnings">
+        <text>
+          <base>the learning delivery's interim PG01 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p42" type="currency" public-name="InterimPG02Earnings">
+        <text>
+          <base>the learning delivery's interim PG02 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p43" type="currency" public-name="InterimPG03Earnings">
+        <text>
+          <base>the learning delivery's interim PG03 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p44" type="currency" public-name="InterimPG04Earnings">
+        <text>
+          <base>the learning delivery's interim PG04 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p45" type="currency" public-name="InterimPG05Earnings">
+        <text>
+          <base>the learning delivery's interim PG05 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p46" type="currency" public-name="InterimPG06Earnings">
+        <text>
+          <base>the learning delivery's interim PG06 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p47" type="currency" public-name="InterimSU01Earnings">
+        <text>
+          <base>the learning delivery's interim SU01 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p48" type="currency" public-name="InterimSU02Earnings">
+        <text>
+          <base>the learning delivery's interim SU02 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p49" type="currency" public-name="InterimSU03Earnings">
+        <text>
+          <base>the learning delivery's interim SU03 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p50" type="currency" public-name="InterimSU04Earnings">
+        <text>
+          <base>the learning delivery's interim SU04 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p51" type="currency" public-name="InterimSU05Earnings">
+        <text>
+          <base>the learning delivery's interim SU05 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p52" type="currency" public-name="InterimSU11Earnings">
+        <text>
+          <base>the learning delivery's interim SU11 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p53" type="currency" public-name="InterimSU12Earnings">
+        <text>
+          <base>the learning delivery's interim SU12 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p54" type="currency" public-name="InterimSU13Earnings">
+        <text>
+          <base>the learning delivery's interim SU13 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p55" type="currency" public-name="InterimSU14Earnings">
+        <text>
+          <base>the learning delivery's interim SU14 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p56" type="currency" public-name="InterimSU15Earnings">
+        <text>
+          <base>the learning delivery's interim SU15 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p57" type="currency" public-name="InterimSU21Earnings">
+        <text>
+          <base>the learning delivery's interim SU21 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p58" type="currency" public-name="InterimSU22Earnings">
+        <text>
+          <base>the learning delivery's interim SU22 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p59" type="currency" public-name="InterimSU23Earnings">
+        <text>
+          <base>the learning delivery's interim SU23 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p60" type="currency" public-name="InterimSU24Earnings">
+        <text>
+          <base>the learning delivery's interim SU24 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p62" type="currency" public-name="InterimST01Earnings">
+        <text>
+          <base>the learning delivery's interim ST01 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p63" type="currency" public-name="AssessmentStartEarnings">
+        <text>
+          <base>the learning delivery's assessment start earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p66" type="currency" public-name="InterimRQ01StartEarnings">
+        <text>
+          <base>the learning delivery's interim RQ01 start earnings</base>
+        </text>
+      </attribute>
+      <attribute name="b59" type="boolean" public-name="IsEarliestStartForFundingPurposes">
+        <text>
+          <base>the learning delivery is the earliest start for funding purposes</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('the earliest start for funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p75" type="currency" public-name="LARSWeightedRateStage1">
+        <text>
+          <base>the learning delivery's LARS weighted rate stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p76" type="currency" public-name="LARSWeightedRateStage2">
+        <text>
+          <base>the learning delivery's LARS weighted rate stage 2</base>
+        </text>
+      </attribute>
+      <attribute name="p91" type="currency" public-name="NR01StartEarnings">
+        <text>
+          <base>the learning delivery's NR01 start earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p92" type="currency" public-name="PG01Earnings">
+        <text>
+          <base>the learning delivery's PG01 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p93" type="currency" public-name="PG02Earnings">
+        <text>
+          <base>the learning delivery's PG02 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p94" type="currency" public-name="PG03Earnings">
+        <text>
+          <base>the learning delivery's PG03 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p95" type="currency" public-name="PG04Earnings">
+        <text>
+          <base>the learning delivery's PG04 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p96" type="currency" public-name="PG05Earnings">
+        <text>
+          <base>the learning delivery's PG05 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p97" type="currency" public-name="PG06Earnings">
+        <text>
+          <base>the learning delivery's PG06 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p98" type="currency" public-name="RQ01StartEarnings">
+        <text>
+          <base>the learning delivery's RQ01 start earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p99" type="currency" public-name="ST01Earnings">
+        <text>
+          <base>the learning delivery's ST01 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p100" type="currency" public-name="SU01Earnings">
+        <text>
+          <base>the learning delivery's SU01 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p101" type="currency" public-name="SU02Earnings">
+        <text>
+          <base>the learning delivery's SU02 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p102" type="currency" public-name="SU03Earnings">
+        <text>
+          <base>the learning delivery's SU03 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p103" type="currency" public-name="SU04Earnings">
+        <text>
+          <base>the learning delivery's SU04 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p104" type="currency" public-name="SU05Earnings">
+        <text>
+          <base>the learning delivery's SU05 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p105" type="currency" public-name="SU11Earnings">
+        <text>
+          <base>the learning delivery's SU11 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p106" type="currency" public-name="SU12Earnings">
+        <text>
+          <base>the learning delivery's SU12 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p107" type="currency" public-name="SU13Earnings">
+        <text>
+          <base>the learning delivery's SU13 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p108" type="currency" public-name="SU14Earnings">
+        <text>
+          <base>the learning delivery's SU14 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p109" type="currency" public-name="SU15Earnings">
+        <text>
+          <base>the learning delivery's SU15 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p110" type="currency" public-name="SU21Earnings">
+        <text>
+          <base>the learning delivery's SU21 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p111" type="currency" public-name="SU22Earnings">
+        <text>
+          <base>the learning delivery's SU22 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p112" type="currency" public-name="SU23Earnings">
+        <text>
+          <base>the learning delivery's SU23 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p113" type="currency" public-name="SU24Earnings">
+        <text>
+          <base>the learning delivery's SU24 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p114" type="currency" public-name="SU25Earnings">
+        <text>
+          <base>the learning delivery's SU25 earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p117" type="currency" public-name="InterimFS01Earnings">
+        <text>
+          <base>the learning delivery's interim FS01 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p118" type="currency" public-name="FS01Earnings">
+        <text>
+          <base>the learning delivery's FS01 earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p120" type="number" public-name="NumberOfESFDataInstances">
+        <text>
+          <base>the number of data instances for the learning delivery</base>
+        </text>
+      </attribute>
+      <attribute name="p122" type="number" public-name="ApplicBasicSkillsTypeCode">
+        <text>
+          <base>the learning delivery's applicable basic skills type code</base>
+        </text>
+      </attribute>
+      <attribute name="p123" type="number" public-name="BasicSkillsTypeCode">
+        <text>
+          <base>the learning delivery's basic skills type code</base>
+        </text>
+        <props>
+          <prop name="PassThrough">False</prop>
+          <prop name="Temporal">False</prop>
+          <prop name="IntegrationTestValue">23</prop>
+        </props>
+      </attribute>
+      <attribute name="p124" type="number" public-name="BasicSkillsTypeCodeStage1">
+        <text>
+          <base>the learning delivery's basic skills type code stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p125" type="currency" public-name="WeightedRateFromESOLStage1">
+        <text>
+          <base>the learning delivery's applicable weighted rate from ESOL Hours stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p126" type="currency" public-name="InterimRQ01AchievementEarnings">
+        <text>
+          <base>the learning delivery's interim RQ01 achievement earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p127" type="currency" public-name="RQ01AchievementEarnings">
+        <text>
+          <base>the learning delivery's RQ01 achievement earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p128" type="currency" public-name="InterimNR01AchievementEarnings">
+        <text>
+          <base>the learning delivery's interim NR01 achievement earnings</base>
+        </text>
+      </attribute>
+      <attribute name="p129" type="currency" public-name="NR01AchievementEarnings">
+        <text>
+          <base>the learning delivery's NR01 achievement earnings</base>
+        </text>
+        <props>
+          <prop name="Size">7</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p136" type="currency" public-name="InterimNR01StartEarnings">
+        <text>
+          <base>the learning delivery's interim NR01 start earnings</base>
+        </text>
+      </attribute>
+      <attribute name="b61" type="boolean" public-name="RQ01AchievementShouldBeCreated">
+        <text>
+          <base>deliverable RQ01 (achievement) should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable RQ01 (achievement)',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b63" type="boolean" public-name="NR01AchievementShouldBeCreated">
+        <text>
+          <base>deliverable NR01 (achievement) should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable NR01 (achievement)',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b65" type="boolean" public-name="ST01ShouldBeCreated">
+        <text>
+          <base>deliverable ST01 should be created for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(create+should,t(simple,modal,normal)),ob('deliverable ST01',singular),o('for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b68" type="boolean" public-name="RegulatedOrNonRegulated">
+        <text>
+          <base>the learning delivery is regulated or non-regulated</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('regulated or non-regulated'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p144" type="date" public-name="StartDateForProgression">
+        <text>
+          <base>the learning delivery's start date for progression</base>
+        </text>
+      </attribute>
+      <attribute name="b73" type="boolean" public-name="IsESOLAim">
+        <text>
+          <base>the learning delivery is an ESOL aim</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('an ESOL aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p146" type="currency" public-name="IntermediateLDProgressionCost">
+        <text>
+          <base>the intermediate progression cost of the learning delivery</base>
+        </text>
+      </attribute>
+      <attribute name="p147" type="currency" public-name="LDProgressionCost">
+        <text>
+          <base>the progression cost of the learning delivery</base>
+        </text>
+      </attribute>
+      <attribute name="p169" type="number" public-name="ActualDaysIL">
+        <text>
+          <base>the learning delivery's actual number of days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">4</prop>
+        </props>
+      </attribute>
+      <attribute name="b80" type="boolean" public-name="InLearningForAMonth">
+        <text>
+          <base>the learning delivery is in learning for a month</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('in learning for a month'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b81" type="boolean" public-name="IsTheEarliestNonRegulatedStart">
+        <text>
+          <base>the learning delivery is the earliest (non) regulated aim start</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('the earliest (non) regulated aim start'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p170" type="number" public-name="LearnerAge">
+        <text>
+          <base>the learning delivery's learner age at the ESF engagement start date</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p171" type="date" public-name="MaxEndDateBeforeProgression">
+        <text>
+          <base>the learning delivery's maximum end date before progression</base>
+        </text>
+      </attribute>
+      <attribute name="p172" type="number" public-name="ThresholdDays">
+        <text>
+          <base>the learning delivery's threshold days</base>
+        </text>
+        <props>
+          <prop name="Size">4</prop>
+        </props>
+      </attribute>
+      <attribute name="p173" type="number" public-name="WeightedRate">
+        <text>
+          <base>the learning delivery's weighted rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p176" type="date" public-name="ApplicableLookupFactorDate">
+        <text>
+          <base>the learning delivery's applicable lookup factor date</base>
+        </text>
+      </attribute>
+      <attribute name="p177" type="date" public-name="ESOLRatePolicyChangeDate">
+        <text>
+          <base>the learning delivery's ESOL rate policy change date</base>
+        </text>
+      </attribute>
+      <attribute name="p178" type="number" public-name="AreaCostStageOne">
+        <text>
+          <base>the learning delivery's area cost factor stage one</base>
+        </text>
+      </attribute>
+      <attribute name="p179" type="text" public-name="LDLearnRefNumber">
+        <text>
+          <base>the learning delivery's learner reference number</base>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">12</prop>
+        </props>
+      </attribute>
+      <attribute name="p180" type="number" public-name="AreaCostFactor">
+        <text>
+          <base>the learning delivery's area cost factor</base>
+        </text>
+      </attribute>
+      <attribute name="p184" type="text" public-name="UCConRefNumber">
+        <text>
+          <base>the learning delivery's uppercase contract reference number</base>
+        </text>
+      </attribute>
+      <attribute name="p186" type="number" public-name="LearnDelEmpStatAtStart">
+        <text>
+          <base>the learning delivery's employment status at start</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="esfdata" name="ESF data" containment-relationship-id="learningdeliverysesfdata" containment-parent-id="learningdelivery" public-id="ESFData">
+      <attribute name="p31" type="date" public-name="EarningsStartDate">
+        <text>
+          <base>the ESF data earnings start date</base>
+        </text>
+      </attribute>
+      <attribute name="p32" type="date" public-name="EarningsEndDate">
+        <text>
+          <base>the ESF data earnings end date</base>
+        </text>
+      </attribute>
+      <attribute name="p87" type="number" public-name="ESFDataAdjustedPremiumFactor">
+        <text>
+          <base>the ESF data adjusted learning rate premium factor</base>
+        </text>
+      </attribute>
+      <attribute name="p121" type="number" public-name="ESFInterimAdjustedLearningRatePremium">
+        <text>
+          <base>the ESF data interim adjusted learning rate premium factor</base>
+        </text>
+      </attribute>
+      <attribute name="b82" type="boolean" public-name="ESFEarningsStartDateAfterContEndDate">
+        <text>
+          <base>the ESF data earnings start date is after the contract end date</base>
+          <parse>s(ver('10.4.7.86'),v(be,t(simple,present,normal)),sb('the ESF data earnings start date',singular),o('after the contract end date'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b83" type="boolean" public-name="ESFEarningsContEndDateBeforeLDActEndDate">
+        <text>
+          <base>the ESF data earnings contract end date is before learning delivery actual end date</base>
+          <parse>s(ver('10.4.7.86'),v(be,t(simple,present,normal)),sb('the ESF data earnings contract end date',singular),o('before learning delivery actual end date'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b84" type="boolean" public-name="ESFEarningsContEndDateBeforeLDStartDate">
+        <text>
+          <base>the ESF data earnings contract end date is before learning delivery start date</base>
+          <parse>s(ver('10.4.7.86'),v(be,t(simple,present,normal)),sb('the ESF data earnings contract end date',singular),o('before learning delivery start date'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="contract" name="the contract" identifying-attribute-name="Contract" identifying-attribute-text="the contract" containment-relationship-id="contracts" containment-parent-id="learner" public-id="Contract">
+      <attribute name="p20" type="text" substitutable="true" default-gender="generic" public-name="Contract">
+        <text>
+          <base>the contract</base>
+        </text>
+      </attribute>
+      <attribute name="p21" type="date" public-name="ESFEngagementStartDate">
+        <text>
+          <base>the contract's ESF engagement start date</base>
+        </text>
+      </attribute>
+      <attribute name="p78" type="number" public-name="NumberOfRegulatedAimsStage1">
+        <text>
+          <base>the stage 1 number of regulated aims for the contract</base>
+        </text>
+      </attribute>
+      <attribute name="p79" type="number" public-name="NumberOfRegulatedAims">
+        <text>
+          <base>the number of regulated aims for the contract</base>
+        </text>
+      </attribute>
+      <attribute name="p80" type="number" public-name="NumberOfNonRegulatedAims">
+        <text>
+          <base>the number of non-regulated aims for the contract</base>
+        </text>
+      </attribute>
+      <attribute name="p81" type="number" public-name="NumberOfNonRegulatedAimsStage1">
+        <text>
+          <base>the stage 1 number of non-regulated aims for the contract</base>
+        </text>
+      </attribute>
+      <attribute name="p116" type="date" public-name="LatestActualEndDateForFundingPurposes">
+        <text>
+          <base>the contract's latest actual end date for the learning deliveries that are a start for funding purposes</base>
+        </text>
+      </attribute>
+      <attribute name="p119" type="date" public-name="EarliestContractNonRegulatedStartDate">
+        <text>
+          <base>the contract's earliest (non) regulated start date</base>
+        </text>
+      </attribute>
+      <attribute name="p145" type="date" public-name="EarliestStartDateForFundingPurposes">
+        <text>
+          <base>the contract's earliest start date for the learning deliveries that are a start for funding purposes</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="destinationandprogression" name="the destination and progression" containment-relationship-id="destinationandprogressions" containment-parent-id="learner" public-id="DPOutcome">
+      <attribute name="p25" type="text" public-name="InterimProgressionType">
+        <text>
+          <base>the destination and progression's (intermediate) progression type</base>
+        </text>
+      </attribute>
+      <attribute name="b66" type="boolean" public-name="EligibleProgressionForTheLearningDelivery">
+        <text>
+          <base>the destination and progression is the eligible progression for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the destination and progression',singular),o('the eligible progression for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p138" type="number" public-name="DestinationAndProgressionNumberOfLearningDeliveries">
+        <text>
+          <base>the destination and progression's number of learning deliveries that are eligible for ESF progression</base>
+        </text>
+      </attribute>
+      <attribute name="p139" type="number" public-name="DestinationAndProgressionInterimNumberOfLearningDeliveries">
+        <text>
+          <base>the destination and progression's interim number of learning deliveries that are eligible for ESF progression</base>
+        </text>
+      </attribute>
+      <attribute name="b67" type="boolean" public-name="DestinationAndProgressionInterimEligibleProgression">
+        <text>
+          <base>the destination and progression (interim) is the eligible progression for the learning delivery</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the destination and progression (interim)',singular),o('the eligible progression for the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p142" type="number" public-name="PriorityCode">
+        <text>
+          <base>the destination and progressions priority code</base>
+        </text>
+      </attribute>
+      <attribute name="p152" type="text" public-name="DPUnitCostType">
+        <text>
+          <base>the destination and progression's unit cost type</base>
+        </text>
+      </attribute>
+      <attribute name="b77" type="boolean" public-name="InterimReachedSixMonthPoint">
+        <text>
+          <base>the destination and progression has reached the interim six month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the interim six month point'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b78" type="boolean" public-name="InterimReachedThreeMonthPoint">
+        <text>
+          <base>the destination and progression has reached the interim three month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the interim three month point'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b79" type="boolean" public-name="InterimReachedTwelveMonthPoint">
+        <text>
+          <base>the destination and progression has reached the interim twelve month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the interim twelve month point'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverylarsfunding" name="the learning delivery LARS funding" containment-relationship-id="learningdeliveryslarsfundings" containment-parent-id="learningdelivery" public-id="LearningDeliveryLARSFunding">
+      <attribute name="p181" type="date" public-name="LARSFundingEffectiveToStageOne">
+        <text>
+          <base>the learning delivery LARS funding's effective to date stage one</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverydeliverable" name="the learning delivery deliverable" containment-relationship-id="deliverables" containment-parent-id="learningdelivery" public-id="LearningDeliveryDeliverable">
+      <attribute name="p174" type="currency" public-name="Earnings">
+        <text>
+          <base>the learning delivery deliverable's earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p175" type="currency" public-name="OnProgEarnings">
+        <text>
+          <base>the learning delivery deliverable's on-programme earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="progressiondata" name="the progression data" containment-relationship-id="progressiondataforthelearningdelivery" containment-parent-id="learningdelivery" identifying-attribute-name="ProgressionDataID" identifying-attribute-text="the progression data's progression ID">
+      <attribute name="p161" type="text" public-name="ProgressionDataID">
+        <text>
+          <base>the progression data's progression ID</base>
+        </text>
+      </attribute>
+      <attribute name="b74" type="boolean" public-name="ProgressionDataIsHighestUnitCost">
+        <text>
+          <base>the progression data is the highest unit cost</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the progression data',singular),o('the highest unit cost'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p167" type="currency" public-name="ProgressionDataUnitCost">
+        <text>
+          <base>the progression data's unit cost</base>
+        </text>
+      </attribute>
+      <attribute name="b75" type="boolean" public-name="InterimProgressionDataIsHighestUnitCost">
+        <text>
+          <base>the progression data is the interim highest unit cost</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the progression data',singular),o('the interim highest unit cost'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p168" type="currency" public-name="ProgressionDataInterimUnitCost">
+        <text>
+          <base>the progression data's interim unit cost</base>
+        </text>
+      </attribute>
+      <attribute name="b76" type="boolean" public-name="IsRelevantProgressionData">
+        <text>
+          <base>the progression data is the relevant progression</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the progression data',singular),o('the relevant progression'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverypostcodeareacostreferencedata" name="the learning delivery postcode area cost reference data" containment-relationship-id="learningdeliveryspostcodeareacostreferencedata" containment-parent-id="learningdelivery">
+      <attribute name="p183" type="date" public-name="AreaCosEffectiveToStageOne">
+        <text>
+          <base>the learning delivery postcode area cost reference data's effective to date stage one</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-relationship-id="global_learners_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" text="the learning deliveries" relationship-id="learningdeliveries" reverse-relationship-id="learnerofthelearningdelivery" reverse-text="the learner of the learning delivery" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="esfdata" text="the learning delivery's ESF data" relationship-id="learningdeliverysesfdata" reverse-relationship-id="learningdeliveryoftheesfdata" reverse-text="the learning delivery of the ESF data" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="contract" text="the contracts" relationship-id="contracts" reverse-relationship-id="learner_contracts_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="contract" is-containment="false" public-id="" reverse-public-id="" text="the contract of the learning delivery" relationship-id="contractofthelearningdelivery" reverse-relationship-id="learningdeliveriesofthecontract" reverse-text="the learning deliveries of the contract" type="ManyToMany" is-computed="false" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the (non) regulated learning deliveries of the contract" relationship-id="nonregulatedlearningdeliveriesofthecontract" reverse-relationship-id="contractofthenonregulateddelivery" reverse-text="the contract of the (non) regulated delivery" type="ManyToMany" is-computed="false" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the assessment learning deliveries of the contract" relationship-id="assessmentlearningdeliveriesofthecontract" reverse-relationship-id="contractoftheassessmentdelivery" reverse-text="the contract of the assessment delivery" type="ManyToMany" is-computed="false" />
+    <relationship source="learner" target="destinationandprogression" text="the destination and progressions" relationship-id="destinationandprogressions" reverse-relationship-id="learnerofthedestinationandprogression" reverse-text="the learner of the destination and progression" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="destinationandprogression" is-containment="false" public-id="" reverse-public-id="" text="the destination and progressions that are eligible for ESF progression from the learning delivery" relationship-id="destinationandprogressionsthatareeligibleforesfprogressionfromthelearningdelivery" reverse-relationship-id="learningdeliveryofthedestinationandprogressionthatiseligibleforesfprogression" reverse-text="the learning delivery of the destination and progression that is eligible for ESF progression" type="ManyToMany" is-computed="false" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the regulated learning deliveries of the contract" relationship-id="regulatedlearningdeliveriesofthecontract" reverse-relationship-id="contractoftheregulatedlearningdelivery" reverse-text="the contract of the regulated learning delivery" type="ManyToMany" is-computed="false" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the not-regulated learning deliveries of the contract" relationship-id="notregulatedlearningdeliveriesofthecontract" reverse-relationship-id="contractofthenotregulateddelivery" reverse-text="the contract of the not-regulated delivery" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the learning deliveries with the same aim reference and an earlier start date of the learning delivery" relationship-id="learningdeliverieswiththesameaimreferenceandanearlierstartdateofthelearningdelivery" reverse-relationship-id="learningdeliveryofthelearningdeliverieswiththesameaimreferenceandanearlierstartdate" reverse-text="the learning delivery of the learning deliveries with the same aim reference and an earlier start date" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" text="the learning delivery's LARS fundings" relationship-id="learningdeliveryslarsfundings" reverse-relationship-id="learmingdeliveryassociatedwiththelarsfunding" reverse-text="the learming delivery associated with the LARS funding" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the (non) regulated deliveries that are a start for funding purposes of the contract" relationship-id="nonregulateddeliveriesthatareastartforfundingpurposesofthecontract" reverse-relationship-id="contractofthedeliverythatisastartforfundingpurposes" reverse-text="the contract of the delivery that is a start for funding purposes" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="learningdeliverydeliverable" text="the deliverables" relationship-id="deliverables" reverse-relationship-id="learningdeliveryofthedeliverable" reverse-text="the learning delivery of the deliverable" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="destinationandprogression" is-containment="false" public-id="" reverse-public-id="" text="the destinations and progressions with the latest outcome start date from the learning delivery" relationship-id="destinationsandprogressionswiththelatestoutcomestartdatefromthelearningdelivery" reverse-relationship-id="learningdeliveryfromthedestinationandprogressionwiththelatestoutcomestartdate" reverse-text="the learning delivery from the destination and progression with the latest outcome start date" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="destinationandprogression" is-containment="false" public-id="" reverse-public-id="" text="the destination and progressions with the highest unit cost of the learning delivery" relationship-id="destinationandprogressionswiththehighestunitcostofthelearningdelivery" reverse-relationship-id="learningdeliveryofthedestinationandprogressionwiththehightestunitcost" reverse-text="the learning delivery of the destination and progression with the hightest unit cost" type="ManyToMany" is-computed="false" />
+    <relationship source="contract" target="learningdelivery" is-containment="false" public-id="" reverse-public-id="" text="the (non) regulated ended deliveries that are a start for funding purposes of the contract" relationship-id="nonregulatedendeddeliveriesthatareastartforfundingpurposesofthecontract" reverse-relationship-id="contractoftheendeddeliverythatisastartforfundingpurposes" reverse-text="the contract of the ended delivery that is a start for funding purposes" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="destinationandprogression" is-containment="false" public-id="" reverse-public-id="" text="the destination and progressions that are relevant for the learning delivery" relationship-id="destinationandprogressionsthatarerelevantforthelearningdelivery" reverse-relationship-id="learningdeliveryofthedestinationandprogressionsthatarerelevant" reverse-text="the learning delivery of the destination and progressions that are relevant" type="ManyToMany" is-computed="false" />
+    <relationship source="learningdelivery" target="progressiondata" text="the progression data for the learning delivery" relationship-id="progressiondataforthelearningdelivery" reverse-relationship-id="learningdeliveryfortheprogressiondata" reverse-text="the learning delivery for the progression data" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverypostcodeareacostreferencedata" text="the learning delivery's postcode area cost reference data" relationship-id="learningdeliveryspostcodeareacostreferencedata" reverse-relationship-id="learningdelivery_learningdeliveryspostcodeareacostreferencedata_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverylarsfunding" is-containment="false" public-id="" reverse-public-id="" text="the learning delivery's LARS ESF category funding" relationship-id="learningdeliveryslarsesfcategoryfunding" reverse-relationship-id="learningdelivery_learningdeliveryslarsesfcategoryfunding_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+  </relationships>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <rule-folders />
+</root>

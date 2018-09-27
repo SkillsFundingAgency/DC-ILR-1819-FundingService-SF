@@ -1,0 +1,290 @@
+<root schema-version="1" product-version="10.4.6.76">
+  <entities>
+    <entity ref="global">
+      <attribute name="p75" type="text" public-name="RulebaseVersion">
+        <text>
+          <base>the current version of the rulebase</base>
+        </text>
+        <props>
+          <prop name="PassThrough">True</prop>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="Learner">
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learningdeliveries" containment-parent-id="learner" public-id="LearningDelivery">
+      <attribute name="p44" type="date" public-name="AdjustedStartDate">
+        <text>
+          <base>the learning delivery's adjusted start date</base>
+        </text>
+      </attribute>
+      <attribute name="p45" type="text" public-name="AimClassification">
+        <text>
+          <base>the learning delivery's aim classification</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p46" type="number" public-name="AdjustedAreaCostFactor">
+        <text>
+          <base>the learning delivery's adjusted area cost factor</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p47" type="number" public-name="AdjustedPremiumFactor">
+        <text>
+          <base>the learning delivery's adjusted learning rate premium factor</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p48" type="currency" public-name="LARSWeightedRate">
+        <text>
+          <base>the learning delivery's applicable LARS weighted rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p49" type="currency" public-name="AimValue">
+        <text>
+          <base>the learning delivery's aim value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="b1" type="boolean" public-name="FundStart">
+        <text>
+          <base>the learning delivery is a start for funding purposes</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a start for funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b2" type="boolean" public-name="AddProgCostElig">
+        <text>
+          <base>the learning delivery is eligible for an additional programme cost payment</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for an additional programme cost payment'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b3" type="boolean" public-name="Achieved">
+        <text>
+          <base>the learning delivery has been achieved</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,perfect)),sb('the learning delivery',singular),o('achieved'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b4" type="boolean" public-name="Restart">
+        <text>
+          <base>the learning delivery is a restart</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a restart'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p54" type="date" public-name="LDESFEngagementStartDate">
+        <text>
+          <base>the learning delivery's ESF engagement start date</base>
+        </text>
+      </attribute>
+      <attribute name="p61" type="date" public-name="ProgressionEndDate">
+        <text>
+          <base>the learning delivery's end date for progression</base>
+        </text>
+      </attribute>
+      <attribute name="b9" type="boolean" public-name="PotentiallyEligibleForProgression">
+        <text>
+          <base>the learning delivery is potentially eligible for progression</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('potentially eligible for progression'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p64" type="currency" public-name="WeightedRateFromESOL">
+        <text>
+          <base>the learning delivery's applicable weighted rate from ESOL Hours</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p66" type="currency" public-name="ApplicWeightFundRate">
+        <text>
+          <base>the learning delivery's applicable weighted rate</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+          <prop name="IntegrationTestValue">50.00001</prop>
+        </props>
+      </attribute>
+      <attribute name="p69" type="date" public-name="LatestPossibleStartDate">
+        <text>
+          <base>the learning delivery's latest possible progression start date</base>
+        </text>
+      </attribute>
+      <attribute name="p72" type="date" public-name="EligibleProgressionOutomeStartDate">
+        <text>
+          <base>the learning delivery's eligible progression outcome start date</base>
+        </text>
+      </attribute>
+      <attribute name="p73" type="text" public-name="EligibleProgressionOutcomeType">
+        <text>
+          <base>the learning delivery's eligible progression outcome type</base>
+        </text>
+        <props>
+          <prop name="Size">4</prop>
+        </props>
+      </attribute>
+      <attribute name="p74" type="number" public-name="EligibleProgressionOutcomeCode">
+        <text>
+          <base>the learning delivery's eligible progression outcome code</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="Temporal">False</prop>
+        </props>
+      </attribute>
+      <attribute name="b10" type="boolean" public-name="LearnDelLearnerEmpAtStart">
+        <text>
+          <base>the learning delivery's learner is employed at start</base>
+          <parse>s(ver('10.4.5.40'),v(employ,t(simple,present,normal)),ob('the learning delivery''s learner',singular),o('at start'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliverydeliverable" name="the learning delivery deliverable" containment-relationship-id="deliverables" containment-parent-id="learningdelivery" public-id="LearningDeliveryDeliverable" identifying-attribute-name="DeliverableCode" identifying-attribute-text="the learning delivery deliverable">
+      <attribute name="p40" type="text" public-name="DeliverableCode">
+        <text>
+          <base>the learning delivery deliverable</base>
+        </text>
+        <props>
+          <prop name="KeySequence">1</prop>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p41" type="currency" public-name="AchievementEarnings">
+        <text>
+          <base>the learning delivery deliverable's achievement earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p55" type="currency" public-name="ProgressionEarnings">
+        <text>
+          <base>the learning delivery deliverable's progression earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p56" type="currency" public-name="StartEarnings">
+        <text>
+          <base>the learning delivery deliverable's start earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p58" type="currency" public-name="AdditionalProgCostEarnings">
+        <text>
+          <base>the learning delivery deliverable's additional programme cost earnings</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p70" type="currency" public-name="DeliverableUnitCost">
+        <text>
+          <base>the learning delivery deliverable's unit cost</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p71" type="number" public-name="DeliverableVolume">
+        <text>
+          <base>the learning delivery deliverable's volume</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p76" type="number" public-name="ReportingVolume">
+        <text>
+          <base>the learning delivery deliverable's reporting volume</base>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="destinationandprogression" name="the destination and progression" containment-relationship-id="destinationandprogressions" containment-parent-id="learner" public-id="DPOutcome">
+      <attribute name="b5" type="boolean" public-name="ReachedSixMonthPoint">
+        <text>
+          <base>the destination and progression has reached the six month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the six month point'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b6" type="boolean" public-name="ReachedThreeMonthPoint">
+        <text>
+          <base>the destination and progression has reached the three month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the three month point'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b7" type="boolean" public-name="ReachedTwelveMonthPoint">
+        <text>
+          <base>the destination and progression has reached the twelve month point</base>
+          <parse>s(ver('10.4.6.76'),v(reach,t(simple,present,perfect)),sb('the destination and progression',singular),o('the twelve month point'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p52" type="text" public-name="ProgressionType">
+        <text>
+          <base>the destination and progression's progression type</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="b8" type="boolean" public-name="PotentialESFProgressionType">
+        <text>
+          <base>the destination and progression is potentially an ESF progression type</base>
+          <parse>s(ver('10.4.6.76'),v(be,t(simple,present,normal)),sb('the destination and progression',singular),o('potentially an ESF progression type'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p68" type="date" public-name="OutcomeDateForProgression">
+        <text>
+          <base>the destination and progression's outcome date for progression</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-relationship-id="global_learners_rev" reverse-text="" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learner" target="learningdelivery" text="the learning deliveries" relationship-id="learningdeliveries" reverse-relationship-id="learnerofthelearningdelivery" reverse-text="the learner of the learning delivery" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="learningdeliverydeliverable" text="the deliverables" relationship-id="deliverables" reverse-relationship-id="learningdeliveryofthedeliverable" reverse-text="the learning delivery of the deliverable" type="OneToMany" is-computed="false" is-containment="true" public-id="Deliverables" reverse-public-id="LearningDeliveryOfDeliverable" />
+    <relationship source="learner" target="destinationandprogression" text="the destination and progressions" relationship-id="destinationandprogressions" reverse-relationship-id="learnerofthedestinationandprogression" reverse-text="the learner of the destination and progression" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+  </relationships>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <rule-folders />
+</root>
