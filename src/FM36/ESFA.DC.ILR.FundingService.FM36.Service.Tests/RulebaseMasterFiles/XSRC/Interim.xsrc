@@ -771,6 +771,21 @@
           <base>the learning delivery's earliest price episode start date</base>
         </text>
       </attribute>
+      <attribute name="p664" type="date" public-name="LearnDelEarlSDAnyAppThisFundYear">
+        <text>
+          <base>the learning delivery's earliest start date on any apprenticeship this funding year</base>
+        </text>
+      </attribute>
+      <attribute name="p666" type="date" public-name="LearnDelHistProgEarliestACT2IgnoringPathways">
+        <text>
+          <base>the learning delivery's historic programme earliest ACT 2 date ignoring pathways</base>
+        </text>
+      </attribute>
+      <attribute name="p667" type="date" public-name="LearnDelProgEarliestACT2DateStage1">
+        <text>
+          <base>the learning delivery's programme earliest ACT 2 date stage 1</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery">
       <attribute name="p169" type="date" public-name="FAMFromDatePeriodStart">
@@ -1686,6 +1701,11 @@
           <base>the historic earning virtual input's TNP 4 price</base>
         </text>
       </attribute>
+      <attribute name="p669" type="number" public-name="HistEarningVirtInputYearTotDays">
+        <text>
+          <base>the historic earning virtual input's funding year total days</base>
+        </text>
+      </attribute>
     </entity>
     <entity id="learningdeliveryyear" name="the learning delivery year" identifying-attribute-name="LearnDelYearIdentifier" identifying-attribute-text="the learning delivery year's identifier" containment-relationship-id="learningdeliveryslearningdeliveryyears" containment-parent-id="learningdelivery">
       <attribute name="p588" type="text" substitutable="true" public-name="LearnDelAppAndYearIdentifier">
@@ -1862,6 +1882,7 @@
     <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's other records in the same year ignoring pathways" relationship-id="apprenticeshippriceepisodesotherrecordsinthesameyearignoringpathways" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodesotherrecordsinthesameyearignoringpathways_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="apprenticeshippriceepisode" target="apprenticeshippriceepisode" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's earlier records in the same year ignoring pathways" relationship-id="apprenticeshippriceepisodesearlierrecordsinthesameyearignoringpathways" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodesearlierrecordsinthesameyearignoringpathways_rev" reverse-text="" type="ManyToMany" is-computed="false" />
     <relationship source="apprenticeshippriceepisode" target="historicearningvirtualinput" is-containment="false" public-id="" reverse-public-id="" text="the apprenticeship price episode's previous virtual histories ignoring pathways" relationship-id="apprenticeshippriceepisodespreviousvirtualhistoriesignoringpathways" reverse-relationship-id="apprenticeshippriceepisode_apprenticeshippriceepisodespreviousvirtualhistoriesignoringpathways_rev" reverse-text="" type="ManyToMany" is-computed="false" />
+    <relationship source="historicearningvirtualinput" target="historicearningvirtualinput" is-containment="false" public-id="" reverse-public-id="" text="the historic earning virtual input same year records" relationship-id="historicearningvirtualinputsameyearrecords" reverse-relationship-id="historicearningvirtualinput_historicearningvirtualinputsameyearrecords_rev" reverse-text="" type="ManyToMany" is-computed="false" />
   </relationships>
   <rule-folders />
 </root>

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.5-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

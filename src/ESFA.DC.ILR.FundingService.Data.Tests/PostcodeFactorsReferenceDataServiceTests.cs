@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -30,10 +31,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost)
-                .Returns(new Dictionary<string, IEnumerable<SfaAreaCost>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
-                    { postcode, sfaAreaCosts }
+                    { postcode, new PostcodeRoot() { SfaAreaCosts = sfaAreaCosts } }
                 });
 
             NewService(referenceDataCacheMock.Object).SFAAreaCostsForPostcode(postcode).Should().BeSameAs(sfaAreaCosts);
@@ -44,8 +45,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost)
-                .Returns(new Dictionary<string, IEnumerable<SfaAreaCost>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
                     { "postcode", null }
                 });
@@ -61,10 +62,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
-                    { postcode, sfaDisadvantages }
+                    { postcode, new PostcodeRoot() { SfaDisadvantages = sfaDisadvantages } }
                 });
 
             NewService(referenceDataCacheMock.Object).SFADisadvantagesForPostcode(postcode).Should().BeSameAs(sfaDisadvantages);
@@ -75,8 +76,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<SfaDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
                     { "postcode", null }
                 });
@@ -92,10 +93,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
-                    { postcode, dasDisadvantages }
+                    { postcode, new PostcodeRoot() { DasDisadvantages = dasDisadvantages } }
                 });
 
             NewService(referenceDataCacheMock.Object).DASDisadvantagesForPostcode(postcode).Should().BeSameAs(dasDisadvantages);
@@ -106,8 +107,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.DasDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<DasDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
                     { "postcode", null }
                 });
@@ -116,34 +117,94 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         }
 
         [Fact]
-        public void EfaDisadvantageCost()
+        public void LatestEfaDisadvantage()
         {
             var postcode = "postcode";
-            var efaDisadvantages = new List<EfaDisadvantage>();
+            var uplift = 1.1m;
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = 1.0m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = uplift,
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
+
+            var efaDisadvantages = new List<EfaDisadvantage>()
+            {
+               efaDisadvantageOne,
+               efaDisadvatageTwo
+            };
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.EfaDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<EfaDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
-                    { postcode, efaDisadvantages }
+                    { postcode, new PostcodeRoot() { EfaDisadvantages = efaDisadvantages } }
                 });
 
-            NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode(postcode).Should().BeSameAs(efaDisadvantages);
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode(postcode).Should().Be(efaDisadvatageTwo.Uplift);
         }
 
         [Fact]
-        public void EfaDisadvantageCost_NotExists()
+        public void LatestEfaDisadvantage_ReturnsNullDecimal()
+        {
+            var postcode = "postcode";
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
+
+            var efaDisadvantages = new List<EfaDisadvantage>()
+            {
+               efaDisadvantageOne,
+               efaDisadvatageTwo
+            };
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
+                {
+                    { postcode, new PostcodeRoot() { EfaDisadvantages = efaDisadvantages } }
+                });
+
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode(postcode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LatestEfaDisadvantage_ReturensNull_NotExists()
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.EfaDisadvantage)
-                .Returns(new Dictionary<string, IEnumerable<EfaDisadvantage>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
                     { "postcode", null }
                 });
 
-            NewService(referenceDataCacheMock.Object).EFADisadvantagesForPostcode("notPostcode").Should().BeEmpty();
+            NewService(referenceDataCacheMock.Object).LatestEFADisadvantagesUpliftForPostcode("notPostcode").Should().BeNull();
         }
 
         [Fact]
@@ -154,10 +215,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
 
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
-                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
-                    { postcode, careerLearningPilot }
+                    { postcode, new PostcodeRoot() { CareerLearningPilots = careerLearningPilot } }
                 });
 
             NewService(referenceDataCacheMock.Object).CareerLearningPilotsForPostcode(postcode).Should().BeSameAs(careerLearningPilot);
@@ -168,8 +229,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.CareerLearningPilot)
-                .Returns(new Dictionary<string, IEnumerable<CareerLearningPilot>>()
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeRoots)
+                .Returns(new Dictionary<string, PostcodeRoot>()
                 {
                     { "postcode", null }
                 });

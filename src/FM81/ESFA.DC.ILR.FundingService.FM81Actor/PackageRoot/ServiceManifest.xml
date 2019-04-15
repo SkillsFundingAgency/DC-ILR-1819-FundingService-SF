@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="ESFA.DC.ILR.FundingService.FM81ActorPkg" Version="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <ServiceTypes>
+    <StatefulServiceType ServiceTypeName="FM81ActorServiceType">
+      <Extensions>
+        <Extension Name="__GeneratedServiceType__" GeneratedId="59069b03-3704-4fef-abdf-39a1e9484198|None">
+          <GeneratedNames xmlns="http://schemas.microsoft.com/2015/03/fabact-no-schema">
+            <DefaultService Name="FM81ActorService" />
+            <ReplicatorEndpoint Name="FM81ActorServiceReplicatorEndpoint" />
+            <ReplicatorConfigSection Name="FM81ActorServiceReplicatorConfig" />
+            <ReplicatorSecurityConfigSection Name="FM81ActorServiceReplicatorSecurityConfig" />
+            <StoreConfigSection Name="FM81ActorServiceLocalStoreConfig" />
+            <ServiceEndpointV2 Name="FM81ActorServiceEndpointV2" />
+          </GeneratedNames>
+        </Extension>
+      </Extensions>
+    </StatefulServiceType>
+  </ServiceTypes>
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>ESFA.DC.ILR.FundingService.FM81Actor.exe</Program>
+      </ExeHost>
+    </EntryPoint>
+  </CodePackage>
+  <ConfigPackage Name="Config" Version="1.0.0" />
+  <Resources>
+    <Endpoints>
+      <Endpoint Name="FM81ActorServiceEndpointV2" />
+      <Endpoint Name="FM81ActorServiceReplicatorEndpoint" />
+    </Endpoints>
+  </Resources>
+  <!-- The content will be generated during build -->
+</ServiceManifest>

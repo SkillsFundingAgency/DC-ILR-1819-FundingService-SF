@@ -2,8 +2,8 @@
 using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.JobContext;
 using ESFA.DC.JobContextManager.Interface;
+using ESFA.DC.JobContextManager.Model;
 using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.Stateless
@@ -24,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
 
             try
             {
-                await _jobContextManager.OpenAsync(cancellationToken);
+                _jobContextManager.OpenAsync(cancellationToken);
 
                 initialised = true;
 
@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless
             {
                 if (initialised)
                 {
-                    await _jobContextManager.CloseAsync(CancellationToken.None);
+                    await _jobContextManager.CloseAsync();
                 }
             }
         }

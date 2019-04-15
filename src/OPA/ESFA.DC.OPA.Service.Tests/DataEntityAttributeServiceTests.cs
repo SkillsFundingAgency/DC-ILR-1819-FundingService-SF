@@ -179,7 +179,7 @@ namespace ESFA.DC.OPA.Service.Tests
 
             dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
-            Action action = () => NewService().GetIntAttributeValue(dataEntity, attributeName);
+            Action action = () => NewService().GetDecimalAttributeValue(dataEntity, attributeName);
 
             action.Should().Throw<FormatException>();
         }
@@ -207,7 +207,39 @@ namespace ESFA.DC.OPA.Service.Tests
 
             dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
-            NewService().GetDecimalAttributeValue(dataEntity, attributeName).Should().BeNull();
+            NewService().GetDecimalAttributeValue(dataEntity, attributeName).Should().Be(0m);
+        }
+
+        [Fact]
+        public void GetDecimalAttributeValue_Obj_Missing()
+        {
+            object value = null;
+
+            NewService().GetDecimalAttributeValue(value).Should().Be(0m);
+        }
+
+        [Fact]
+        public void GetDecimalAttributeValue_Obj_NotDecimal()
+        {
+            object value = "Not A Decimal";
+
+            NewService().GetDecimalAttributeValue(value).Should().Be(0m);
+        }
+
+        [Fact]
+        public void GetDecimalAttributeValue_Obj()
+        {
+            object value = "1.2";
+
+            NewService().GetDecimalAttributeValue(value).Should().Be(1.2m);
+        }
+
+        [Fact]
+        public void GetDecimalAttributeValue_Obj_Uncertain()
+        {
+            object value = "uncertain";
+
+            NewService().GetDecimalAttributeValue(value).Should().Be(0m);
         }
 
         [Fact]
@@ -308,6 +340,25 @@ namespace ESFA.DC.OPA.Service.Tests
             dataEntity.Attributes.Add(attributeName, new AttributeData(value));
 
             NewService().GetDateTimeAttributeValue(dataEntity, attributeName).Should().BeNull();
+        }
+
+        [Theory]
+        [InlineData(8, null, 0)]
+        [InlineData(9, "1.0", 1)]
+        [InlineData(8, 2, 2)]
+        [InlineData(8, "uncertain", 0)]
+        public void GetDecimalAttributeValueForPeriod(int period, object value, decimal assertion)
+        {
+            var attribute = new AttributeData(null);
+            var changePoints = new List<TemporalValueItem>
+            {
+                new TemporalValueItem(new DateTime(2018, period, 1), value, string.Empty),
+                new TemporalValueItem(new DateTime(2018, 10, 1), "1", string.Empty)
+            };
+
+            attribute.AddChangepoints(changePoints);
+
+            NewService().GetDecimalAttributeValueForPeriod(attribute, new DateTime(2018, period, 1)).Should().Be(assertion);
         }
 
         private DataEntityAttributeService NewService()

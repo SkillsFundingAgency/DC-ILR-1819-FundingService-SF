@@ -11,5 +11,7 @@
         string LargeEmployersConnectionString { get; }
 
         string AppsEarningsHistoryConnectionString { get; }
+
+        string FCSConnectionString { get; }
     }
 }

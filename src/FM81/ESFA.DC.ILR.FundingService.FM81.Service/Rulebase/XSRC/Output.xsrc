@@ -1,0 +1,465 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p308" type="text" public-name="CurFundYr">
+        <text>
+          <base>the current funding year</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+      <attribute name="p310" type="text" public-name="RulebaseVersion">
+        <text>
+          <base>the current version of the rulebase</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+        </props>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="">
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner" public-id="">
+      <attribute name="p384" type="date" public-name="ProgStandardStartDate">
+        <text>
+          <base>the learning delivery's standard programme start date</base>
+        </text>
+      </attribute>
+      <attribute name="p389" type="text" public-name="FundLine">
+        <text>
+          <base>the learning delivery's funding line type</base>
+        </text>
+        <props>
+          <prop name="Size">50</prop>
+        </props>
+      </attribute>
+      <attribute name="p391" type="currency" public-name="MathEngAimValue">
+        <text>
+          <base>the learning delivery's Maths/English aim value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p401" type="number" public-name="PlannedNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's planned instalments</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p416" type="currency" public-name="LearnSuppFundCash">
+        <text>
+          <base>the learning delivery's LSF cash</base>
+          <parse />
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p437" type="date" public-name="AdjProgStartDate">
+        <text>
+          <base>the learning delivery's adjusted standard programme start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+        </props>
+      </attribute>
+      <attribute name="b29" type="boolean" public-name="LearnSuppFund">
+        <text>
+          <base>the learning delivery is eligible for LSF in the period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for LSF in the period'))</parse>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p439" type="date" public-name="AdjStartDate">
+        <text>
+          <base>the learning delivery's adjusted start date</base>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+        </props>
+      </attribute>
+      <attribute name="p450" type="currency" public-name="MathEngOnProgPayment">
+        <text>
+          <base>the learning delivery's Maths/English on programme payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p454" type="number" public-name="InstPerPeriod">
+        <text>
+          <base>the learning delivery's number of instalments this period</base>
+        </text>
+        <props>
+          <prop name="Size">1</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p456" type="currency" public-name="SmallBusPayment">
+        <text>
+          <base>the learning delivery's small business payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p457" type="currency" public-name="YoungAppSecondPayment">
+        <text>
+          <base>the learning delivery's second 16 to 18 incentive payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p459" type="currency" public-name="CoreGovContPayment">
+        <text>
+          <base>the learning delivery's core government contribution payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b30" type="boolean" public-name="YoungAppEligible">
+        <text>
+          <base>the learning delivery is eligible for a 16 to 18 incentive payment</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for a 16 to 18 incentive payment'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b31" type="boolean" public-name="SmallBusEligible">
+        <text>
+          <base>the learning delivery is eligible for a small business payment</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for a small business payment'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p460" type="number" public-name="MathEngOnProgPct">
+        <text>
+          <base>the learning delivery's Maths/English on programme percentage</base>
+        </text>
+        <props>
+          <prop name="Size">8</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p461" type="number" public-name="AgeStandardStart">
+        <text>
+          <base>the learning delivery's age at start of standard</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p463" type="date" public-name="SmallBusThresholdDate">
+        <text>
+          <base>the learning delivery's small business threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p464" type="date" public-name="YoungAppSecondThresholdDate">
+        <text>
+          <base>the learning delivery's second 16 to 18 incentive threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p465" type="number" public-name="EmpIdFirstDayStandard">
+        <text>
+          <base>the learning delivery's employer identifier on the first day of standard</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p466" type="number" public-name="EmpIdFirstYoungAppDate">
+        <text>
+          <base>the learning delivery's employer identifier on the first 16 to 18 incentive threshold date</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p467" type="number" public-name="EmpIdSecondYoungAppDate">
+        <text>
+          <base>the learning delivery's employer identifier on the second 16 to 18 incentive threshold date</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p468" type="number" public-name="EmpIdSmallBusDate">
+        <text>
+          <base>the learning delivery's employer identifier on the small business threshold date</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p470" type="date" public-name="YoungAppFirstThresholdDate">
+        <text>
+          <base>the learning delivery's first 16 to 18 incentive threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="p473" type="date" public-name="AchApplicDate">
+        <text>
+          <base>the learning delivery's applicable achievement date</base>
+        </text>
+      </attribute>
+      <attribute name="b32" type="boolean" public-name="AchEligible">
+        <text>
+          <base>the learning delivery is eligible for an achievement payment</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('eligible for an achievement payment'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b33" type="boolean" public-name="Achieved">
+        <text>
+          <base>the learning delivery has been achieved</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,perfect)),sb('the learning delivery',singular),o('achieved'))</parse>
+        </text>
+        <props>
+          <prop name="UncertainDerivation">null</prop>
+        </props>
+      </attribute>
+      <attribute name="p474" type="currency" public-name="AchievementApplicVal">
+        <text>
+          <base>the learning delivery's applicable achievement value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="UncertainDerivation">0</prop>
+        </props>
+      </attribute>
+      <attribute name="p475" type="currency" public-name="AchPayment">
+        <text>
+          <base>the learning delivery's achievement incentive payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+          <prop name="UncertainDerivation">0</prop>
+        </props>
+      </attribute>
+      <attribute name="p476" type="number" public-name="ActualNumInstalm">
+        <text>
+          <base>the learning delivery's actual instalments</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p478" type="number" public-name="CombinedAdjProp">
+        <text>
+          <base>the learning delivery's combined adjustment proportion</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p481" type="number" public-name="EmpIdAchDate">
+        <text>
+          <base>the learning delivery's employer identifier on the applicable achievement date</base>
+        </text>
+        <props>
+          <prop name="Size">9</prop>
+        </props>
+      </attribute>
+      <attribute name="p482" type="number" public-name="LearnDelDaysIL">
+        <text>
+          <base>the learning delivery's days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p483" type="number" public-name="LearnDelStandardAccDaysIL">
+        <text>
+          <base>the learning delivery's standard accumulated days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p484" type="number" public-name="LearnDelStandardPrevAccDaysIL">
+        <text>
+          <base>the learning delivery's previous standard accumulated total days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p485" type="number" public-name="LearnDelStandardTotalDaysIL">
+        <text>
+          <base>the learning delivery's standard total number of days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p486" type="number" public-name="ActualDaysIL">
+        <text>
+          <base>the learning delivery's actual days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p487" type="currency" public-name="MathEngBalPayment">
+        <text>
+          <base>the learning delivery's Maths/English balancing payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p488" type="number" public-name="MathEngBalPct">
+        <text>
+          <base>the learning delivery's Maths/English balancing percentage</base>
+        </text>
+        <props>
+          <prop name="Size">8</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b34" type="boolean" public-name="MathEngLSFFundStart">
+        <text>
+          <base>the learning delivery is a start for Maths/English and Learning Support funding purposes</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a start for Maths/English and Learning Support funding purposes'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p489" type="number" public-name="PlannedTotalDaysIL">
+        <text>
+          <base>the learning delivery's planned days in learning</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p490" type="number" public-name="MathEngLSFThresholdDays">
+        <text>
+          <base>the learning delivery's Maths/English and Learning Support threshold days</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p491" type="number" public-name="OutstandNumOnProgInstalm">
+        <text>
+          <base>the learning delivery's outstanding instalments</base>
+        </text>
+        <props>
+          <prop name="Size">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p492" type="currency" public-name="SmallBusApplicVal">
+        <text>
+          <base>the learning delivery's applicable small business value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p493" type="number" public-name="SmallBusStatusFirstDayStandard">
+        <text>
+          <base>the learning delivery's small business status on the first day of standard</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p494" type="number" public-name="SmallBusStatusThreshold">
+        <text>
+          <base>the learning delivery's small business status on the small business threshold date</base>
+        </text>
+        <props>
+          <prop name="Size">3</prop>
+        </props>
+      </attribute>
+      <attribute name="p495" type="currency" public-name="YoungAppApplicVal">
+        <text>
+          <base>the learning delivery's applicable 16 to 18 incentive value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p496" type="number" public-name="CoreGovContCapApplicVal">
+        <text>
+          <base>the learning delivery's applicable core government contribution cap value</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+        </props>
+      </attribute>
+      <attribute name="p497" type="currency" public-name="CoreGovContUncapped">
+        <text>
+          <base>the learning delivery's uncapped core government contribution</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p498" type="date" public-name="ApplicFundValDate">
+        <text>
+          <base>the learning delivery's applicable funding value date</base>
+        </text>
+      </attribute>
+      <attribute name="p499" type="currency" public-name="YoungAppFirstPayment">
+        <text>
+          <base>the learning delivery's first 16 to 18 incentive payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p500" type="currency" public-name="YoungAppPayment">
+        <text>
+          <base>the learning delivery's total 16 to 18 incentive payment</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">5</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+  </relationships>
+  <rule-folders />
+</root>

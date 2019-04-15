@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Output
         {
             return new LearnerPeriodisedValues()
             {
-                AttributeName = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LnrOnProgPay),
+                AttributeName = Attributes.LnrOnProgPay,
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
                 Period1 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.Period1),
                 Period2 = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.Period2),

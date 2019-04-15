@@ -317,12 +317,15 @@
         // Apprenticeship Historic Earnings Output
         public const string AppIdentifierOutput = "AppIdentifierOutput";
         public const string AppProgCompletedInTheYearOutput = "AppProgCompletedInTheYearOutput";
+        public const string HistoricBalancingProgAimPaymentsInTheYear = "HistoricBalancingProgAimPaymentsInTheYear";
+        public const string HistoricCompletionProgAimPaymentsInTheYear = "HistoricCompletionProgAimPaymentsInTheYear";
         public const string HistoricDaysInYearOutput = "HistoricDaysInYearOutput";
         public const string HistoricEffectiveTNPStartDateOutput = "HistoricEffectiveTNPStartDateOutput";
         public const string HistoricEmpIdEndWithinYearOutput = "HistoricEmpIdEndWithinYearOutput";
         public const string HistoricEmpIdStartWithinYearOutput = "HistoricEmpIdStartWithinYearOutput";
         public const string HistoricFworkCodeOutput = "HistoricFworkCodeOutput";
         public const string HistoricLearner1618AtStartOutput = "HistoricLearner1618AtStartOutput";
+        public const string HistoricOnProgProgAimPaymentsInTheYear = "HistoricOnProgProgAimPaymentsInTheYear";
         public const string HistoricPMRAmountOutput = "HistoricPMRAmountOutput";
         public const string HistoricProgrammeStartDateIgnorePathwayOutput = "HistoricProgrammeStartDateIgnorePathwayOutput";
         public const string HistoricProgrammeStartDateMatchPathwayOutput = "HistoricProgrammeStartDateMatchPathwayOutput";

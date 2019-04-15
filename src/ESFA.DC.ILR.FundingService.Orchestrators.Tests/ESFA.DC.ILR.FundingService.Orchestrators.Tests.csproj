@@ -52,8 +52,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=5.4.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.5.4.1\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=5.4.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.5.4.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -81,6 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FM81FundingOutputCondenserServiceTests.cs" />
+    <Compile Include="FM70FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM36FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM35FundingOutputCondenserServiceTests.cs" />
     <Compile Include="FM25FundingOutputCondenserServiceTests.cs" />
@@ -108,6 +110,14 @@
       <Project>{E0EDD60C-BE4F-4B75-AD47-BCD8C86312A5}</Project>
       <Name>ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model.csproj">
+      <Project>{CE34CD36-5367-4832-A1B3-C05CF63B7680}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM70.FundingOutput.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj">
+      <Project>{159894D1-43A0-4F81-B52A-734B7F15C1A7}</Project>
+      <Name>ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -115,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
             _populationService.PopulateAsync(CancellationToken.None).Wait();
 
             // pre funding
-            var learnersToProcess = _learnerPerActorService.BuildPages();
+            var learnersToProcess = _learnerPerActorService.BuildPages(new List<int> { 35 });
 
             // process funding
             var fundingOutputs = ProcessFunding(learnersToProcess);

@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM81.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.FM81.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Rulebase\Trailblazer Funding Calc 18_19.zip" />
+    <None Remove="Rulebase\XSRC\Input.xsrc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Rulebase\Trailblazer Funding Calc 18_19.zip">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Rulebase\XSRC\Input.xsrc">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.15-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.5-beta0001" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ESFA.DC.ILR.FundingService.Data\ESFA.DC.ILR.FundingService.Data.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Model\ESFA.DC.OPA.Model.csproj" />
+    <ProjectReference Include="..\..\OPA\ESFA.DC.OPA.Service.Interface\ESFA.DC.OPA.Service.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model\ESFA.DC.ILR.FundingService.FM81.FundingOutput.Model.csproj" />
+  </ItemGroup>
+
+</Project>

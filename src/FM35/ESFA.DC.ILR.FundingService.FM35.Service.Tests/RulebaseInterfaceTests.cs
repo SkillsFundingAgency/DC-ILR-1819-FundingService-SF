@@ -402,6 +402,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                         PwayCodeNullable = 5,
                         ProgTypeNullable = 6,
                         FworkCodeNullable = 7,
+                        FundModel = 35,
                         StdCodeNullable = 8,
                         LearnStartDate = new DateTime(2018, 8, 1),
                         LearnPlanEndDate = new DateTime(2019, 8, 1),
@@ -417,22 +418,22 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                 },
             };
 
-            var larsLearningDelivery = new LARSLearningDelivery
+            var larsLearningDelivery = new LARSLearningDelivery();
+
+            var larsFunding = new List<LARSFunding>
             {
-                LARSFunding = new List<LARSFunding>
-                {
-                    new LARSFunding(),
-                },
+                new LARSFunding()
             };
 
             var learningDelivery = learner.LearningDeliveries.First();
 
             largeEmployersRefererenceDataServiceMock.Setup(l => l.LargeEmployersforEmpID(It.IsAny<int>())).Returns(new List<LargeEmployers> { new LargeEmployers() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsLearningDelivery);
+            larsRefererenceDataServiceMock.Setup(l => l.LARSFundingsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(larsFunding);
             larsRefererenceDataServiceMock.Setup(l => l.LARSFFrameworkAimsForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSFrameworkAims> { new LARSFrameworkAims() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSAnnualValuesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSAnnualValue> { new LARSAnnualValue() });
             larsRefererenceDataServiceMock.Setup(l => l.LARSLearningDeliveryCategoriesForLearnAimRef(learningDelivery.LearnAimRef)).Returns(new List<LARSLearningDeliveryCategory> { new LARSLearningDeliveryCategory() });
-            organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding() });
+            organisationRefererenceDataServiceMock.Setup(o => o.OrganisationFundingForUKPRN(It.IsAny<int>())).Returns(new List<OrgFunding> { new OrgFunding { OrgFundFactType = Attributes.OrgFundFactorTypeAdultSkills } });
             postcodesReferenceDataServiceMock.Setup(p => p.SFAAreaCostsForPostcode(learningDelivery.DelLocPostCode)).Returns(new List<SfaAreaCost> { new SfaAreaCost() });
             postcodesReferenceDataServiceMock.Setup(p => p.SFADisadvantagesForPostcode(learner.PostcodePrior)).Returns(new List<SfaDisadvantage> { new SfaDisadvantage() });
 

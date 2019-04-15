@@ -7,6 +7,7 @@ using ESFA.DC.ILR.FundingService.Config.Interfaces;
 using ESFA.DC.ILR.FundingService.FM35Actor.Modules;
 using ESFA.DC.ILR.FundingService.Modules;
 using ESFA.DC.ServiceFabric.Helpers;
+using Microsoft.ServiceFabric.Actors.Runtime;
 
 namespace ESFA.DC.ILR.FundingService.FM35Actor
 {
@@ -22,7 +23,10 @@ namespace ESFA.DC.ILR.FundingService.FM35Actor
                 var builder = BuildContainer();
 
                 builder.RegisterServiceFabricSupport();
-                builder.RegisterActor<FM35Actor>();
+                builder.RegisterActor<FM35Actor>(settings: new ActorServiceSettings
+                {
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                });
 
                 using (var container = builder.Build())
                 {

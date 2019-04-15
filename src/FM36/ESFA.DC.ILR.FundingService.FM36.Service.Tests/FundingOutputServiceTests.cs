@@ -44,6 +44,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         public void LearnerFromDataEntity()
         {
             var learnRefNumber = "LearnRefNumber";
+            var uln = 1234567890;
 
             var dataEntity = new DataEntity(string.Empty)
             {
@@ -53,16 +54,19 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
+            dataEntityAttributeServiceMock.Setup(s => s.GetLongAttributeValue(dataEntity, "ULN")).Returns(uln);
 
             var learner = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).MapLearner(dataEntity);
 
             learner.LearnRefNumber = learnRefNumber;
+            learner.ULN = uln;
         }
 
         [Fact]
         public void LearningDeliveryFromDataEntity()
         {
             var aimSeqNumber = 1;
+            var learnStartDate = new DateTime(2018, 08, 01);
 
             var dataEntity = new DataEntity(string.Empty)
             {
@@ -103,6 +107,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "AimSeqNumber")).Returns(aimSeqNumber);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnStartDate")).Returns(learnStartDate);
 
             var learningDelivery = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object).LearningDeliveryFromDataEntity(dataEntity);
 
@@ -139,7 +144,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var learnAimRef = "LearnAimRef";
            var learnActEndDate = new DateTime(2018, 8, 1);
            var learnDel1618AtStart = false;
-           var learnDelAppAccDaysIL = 1.0m;
+           var learnDelAppAccDaysIL = 1;
            var learnDelApplicDisadvAmount = 1.0m;
            var learnDelApplicEmp1618Incentive = 1.0m;
            var learnDelApplicEmpDate = new DateTime(2018, 8, 1);
@@ -149,8 +154,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var learnDelDaysIL = 5;
            var learnDelDisadAmount = 1.0m;
            var learnDelEligDisadvPayment = false;
-           var learnDelEmpIdFirstAdditionalPaymentThreshold = 1.0m;
-           var learnDelEmpIdSecondAdditionalPaymentThreshold = 1.0m;
+           var learnDelEmpIdFirstAdditionalPaymentThreshold = 20;
+           var learnDelEmpIdSecondAdditionalPaymentThreshold = 30;
            var learnDelHistDaysThisApp = 6;
            var learnDelHistProgEarnings = 1.0m;
            var learnDelInitialFundLineType = "LearnDelInitialFundLineType";
@@ -184,7 +189,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
            var stdCode = 16;
            var thresholdDays = 12;
 
-        var dataEntity = new DataEntity(string.Empty);
+            var dataEntity = new DataEntity(string.Empty);
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
@@ -215,7 +220,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnAimRef")).Returns(learnAimRef);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnActEndDate")).Returns(learnActEndDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDel1618AtStart")).Returns(learnDel1618AtStart);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelAppAccDaysIL")).Returns(learnDelAppAccDaysIL);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelAppAccDaysIL")).Returns(learnDelAppAccDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelApplicDisadvAmount")).Returns(learnDelApplicDisadvAmount);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelApplicEmp1618Incentive")).Returns(learnDelApplicEmp1618Incentive);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "LearnDelApplicEmpDate")).Returns(learnDelApplicEmpDate);
@@ -225,8 +230,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelDaysIL")).Returns(learnDelDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelDisadAmount")).Returns(learnDelDisadAmount);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "LearnDelEligDisadvPayment")).Returns(learnDelEligDisadvPayment);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelEmpIdFirstAdditionalPaymentThreshold")).Returns(learnDelEmpIdFirstAdditionalPaymentThreshold);
-            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelEmpIdSecondAdditionalPaymentThreshold")).Returns(learnDelEmpIdSecondAdditionalPaymentThreshold);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelEmpIdFirstAdditionalPaymentThreshold")).Returns(learnDelEmpIdFirstAdditionalPaymentThreshold);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelEmpIdSecondAdditionalPaymentThreshold")).Returns(learnDelEmpIdSecondAdditionalPaymentThreshold);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "LearnDelHistDaysThisApp")).Returns(learnDelHistDaysThisApp);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LearnDelHistProgEarnings")).Returns(learnDelHistProgEarnings);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnDelInitialFundLineType")).Returns(learnDelInitialFundLineType);
@@ -254,7 +259,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedNumOnProgInstalm")).Returns(plannedNumOnProgInstalm);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PlannedTotalDaysIL")).Returns(plannedTotalDaysIL);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriorLearnFundAdj")).Returns(priorLearnFundAdj);
-            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PriorLearnFundAdj")).Returns(progType);
+            dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "ProgType")).Returns(progType);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "PwayCode")).Returns(pwayCode);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "SecondIncentiveThresholdDate")).Returns(secondIncentiveThresholdDate);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "STDCode")).Returns(stdCode);
@@ -273,6 +278,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDelivery.Completed.Should().Be(completed);
             learningDelivery.FirstIncentiveThresholdDate.Should().Be(firstIncentiveThresholdDate);
             learningDelivery.FundStart.Should().Be(fundStart);
+            learningDelivery.FworkCode.Should().Be(fworkCode);
             learningDelivery.LDApplic1618FrameworkUpliftBalancingValue.Should().Be(ldApplic1618FrameworkUpliftBalancingValue);
             learningDelivery.LDApplic1618FrameworkUpliftCompElement.Should().Be(ldApplic1618FrameworkUpliftCompElement);
             learningDelivery.LDApplic1618FRameworkUpliftCompletionValue.Should().Be(ldApplic1618FRameworkUpliftCompletionValue);
@@ -312,19 +318,52 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             learningDelivery.OutstandNumOnProgInstalm.Should().Be(outstandNumOnProgInstalm);
             learningDelivery.PlannedNumOnProgInstalm.Should().Be(plannedNumOnProgInstalm);
             learningDelivery.PlannedTotalDaysIL.Should().Be(plannedTotalDaysIL);
+            learningDelivery.ProgType.Should().Be(progType);
+            learningDelivery.PwayCode.Should().Be(pwayCode);
             learningDelivery.SecondIncentiveThresholdDate.Should().Be(secondIncentiveThresholdDate);
+            learningDelivery.StdCode.Should().Be(stdCode);
             learningDelivery.ThresholdDays.Should().Be(thresholdDays);
         }
 
         [Fact]
         public void LearningDeliveryPeriodisedAttributeData_Correct()
         {
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var learningDeliveryPeriodisedAttributeData =
-                NewService().LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntity(null).Single());
 
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
 
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
+        }
+
+        [Fact]
+        public void LearningDeliveryPeriodisedTextAttributeData_Correct()
+        {
+            var learningDeliveryPeriodisedTextAttributeData =
+                NewService().LearningDeliveryPeriodisedTextValues(TestLearningDeliveryEntity(null).Single());
+
+            var expectedLearningDeliveryPeriodisedTextAttributeData = TestLearningDeliveryPeriodisedTextAttributesDataArray();
+
+            learningDeliveryPeriodisedTextAttributeData.Should().BeEquivalentTo(expectedLearningDeliveryPeriodisedTextAttributeData);
         }
 
         [Fact]
@@ -586,8 +625,27 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         [Fact]
         public void PriceEpisodePeriodisedAttributeData_Correct()
         {
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+            var internalDataCacheMock = new Mock<IInternalDataCache>();
+
+            internalDataCacheMock.Setup(p => p.Period1).Returns(new DateTime(2018, 8, 1));
+            internalDataCacheMock.Setup(p => p.Period2).Returns(new DateTime(2018, 9, 1));
+            internalDataCacheMock.Setup(p => p.Period3).Returns(new DateTime(2018, 10, 1));
+            internalDataCacheMock.Setup(p => p.Period4).Returns(new DateTime(2018, 11, 1));
+            internalDataCacheMock.Setup(p => p.Period5).Returns(new DateTime(2018, 12, 1));
+            internalDataCacheMock.Setup(p => p.Period6).Returns(new DateTime(2019, 1, 1));
+            internalDataCacheMock.Setup(p => p.Period7).Returns(new DateTime(2019, 2, 1));
+            internalDataCacheMock.Setup(p => p.Period8).Returns(new DateTime(2019, 3, 1));
+            internalDataCacheMock.Setup(p => p.Period9).Returns(new DateTime(2019, 4, 1));
+            internalDataCacheMock.Setup(p => p.Period10).Returns(new DateTime(2019, 5, 1));
+            internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
+            internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var priceEpisodePeriodisedAttributeData =
-                NewService().PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).PriceEpisodePeriodisedValues(TestPriceEpisodeEntity(null).Single());
 
             var expectedPriceEpisodePeriodisedAttributeData = TestPriceEpisodePeriodisedAttributesDataArray();
 
@@ -599,6 +657,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
         {
             var appIdentifierOutput = "Id";
             var appProgCompletedInTheYearOutput = false;
+            var BalancingProgAimPaymentsInTheYearOutput = 1.0m;
+            var CompletionProgAimPaymentsInTheYearOutput = 1.0m;
+            var OnProgProgAimPaymentsInTheYearOutput = 1.0m;
             var historicDaysInYearOutput = 1;
             var historicEffectiveTNPStartDateOutput = new DateTime(2018, 8, 1);
             var historicEmpIdEndWithinYearOutput = 2;
@@ -629,12 +690,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "AppIdentifierOutput")).Returns(appIdentifierOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "AppProgCompletedInTheYearOutput")).Returns(appProgCompletedInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricBalancingProgAimPaymentsInTheYear")).Returns(BalancingProgAimPaymentsInTheYearOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricCompletionProgAimPaymentsInTheYear")).Returns(CompletionProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricDaysInYearOutput")).Returns(historicDaysInYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricEffectiveTNPStartDateOutput")).Returns(historicEffectiveTNPStartDateOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdEndWithinYearOutput")).Returns(historicEmpIdEndWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricEmpIdStartWithinYearOutput")).Returns(historicEmpIdStartWithinYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetIntAttributeValue(dataEntity, "HistoricFworkCodeOutput")).Returns(historicFworkCodeOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetBoolAttributeValue(dataEntity, "HistoricLearner1618AtStartOutput")).Returns(historicLearner1618AtStartOutput);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricOnProgProgAimPaymentsInTheYear")).Returns(OnProgProgAimPaymentsInTheYearOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "HistoricPMRAmountOutput")).Returns(historicPMRAmountOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateIgnorePathwayOutput")).Returns(historicProgrammeStartDateIgnorePathwayOutput);
             dataEntityAttributeServiceMock.Setup(s => s.GetDateTimeAttributeValue(dataEntity, "HistoricProgrammeStartDateMatchPathwayOutput")).Returns(historicProgrammeStartDateMatchPathwayOutput);
@@ -657,12 +721,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
 
             historicEarningOutput.AppIdentifierOutput.Should().Be(appIdentifierOutput);
             historicEarningOutput.AppProgCompletedInTheYearOutput.Should().Be(appProgCompletedInTheYearOutput);
+            historicEarningOutput.BalancingProgAimPaymentsInTheYear.Should().Be(BalancingProgAimPaymentsInTheYearOutput);
+            historicEarningOutput.CompletionProgAimPaymentsInTheYear.Should().Be(CompletionProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricDaysInYearOutput.Should().Be(historicDaysInYearOutput);
             historicEarningOutput.HistoricEffectiveTNPStartDateOutput.Should().Be(historicEffectiveTNPStartDateOutput);
             historicEarningOutput.HistoricEmpIdEndWithinYearOutput.Should().Be(historicEmpIdEndWithinYearOutput);
             historicEarningOutput.HistoricEmpIdStartWithinYearOutput.Should().Be(historicEmpIdStartWithinYearOutput);
             historicEarningOutput.HistoricFworkCodeOutput.Should().Be(historicFworkCodeOutput);
             historicEarningOutput.HistoricLearner1618AtStartOutput.Should().Be(historicLearner1618AtStartOutput);
+            historicEarningOutput.OnProgProgAimPaymentsInTheYear.Should().Be(OnProgProgAimPaymentsInTheYearOutput);
             historicEarningOutput.HistoricPMRAmountOutput.Should().Be(historicPMRAmountOutput);
             historicEarningOutput.HistoricProgrammeStartDateIgnorePathwayOutput.Should().Be(historicProgrammeStartDateIgnorePathwayOutput);
             historicEarningOutput.HistoricProgrammeStartDateMatchPathwayOutput.Should().Be(historicProgrammeStartDateMatchPathwayOutput);
@@ -802,12 +869,12 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "ThresholdDays", Attribute(false, "1.0") },
                     { "DisadvFirstPayment", Attribute(false, "1.0") },
                     { "DisadvSecondPayment", Attribute(false, "1.0") },
-                    { "FundLineType", Attribute(false, "1.0") },
+                    { "FundLineType", Attribute(false, "Type") },
                     { "InstPerPeriod", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftBalancingPayment", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftCompletionPayment", Attribute(false, "1.0") },
                     { "LDApplic1618FrameworkUpliftOnProgPayment", Attribute(false, "1.0") },
-                    { "LearnDelContType", Attribute(false, "1.0") },
+                    { "LearnDelContType", Attribute(false, "Type") },
                     { "LearnDelFirstEmp1618Pay", Attribute(false, "1.0") },
                     { "LearnDelFirstProv1618Pay", Attribute(false, "1.0") },
                     { "LearnDelLevyNonPayInd", Attribute(false, "1.0") },
@@ -826,8 +893,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "ProgrammeAimOnProgPayment", Attribute(false, "1.0") },
                     { "ProgrammeAimProgFundIndMaxEmpCont", Attribute(false, "1.0") },
                     { "ProgrammeAimProgFundIndMinCoInvest", Attribute(false, "1.0") },
-                    { "ProgrammeAimTotProgFund", Attribute(false, "1.0") },
-                    { "LearnDelLearnAddPayment", Attribute(false, "1.0") },
+                    { "ProgrammeAimTotProgFund", Attribute(true, "1.0") },
+                    { "LearnDelLearnAddPayment", Attribute(true, "1.0") },
                 },
 
                 Parent = parent,
@@ -871,9 +938,38 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
             };
         }
 
+        private LearningDeliveryPeriodisedTextValues[] TestLearningDeliveryPeriodisedTextAttributesDataArray()
+        {
+            return new LearningDeliveryPeriodisedTextValues[]
+            {
+                TestLearningDeliveryPeriodisedAttributesData("FundLineType", "Type"),
+                TestLearningDeliveryPeriodisedAttributesData("LearnDelContType", "Type"),
+            };
+        }
+
         private LearningDeliveryPeriodisedValues TestLearningDeliveryPeriodisedAttributesData(string attribute, decimal value)
         {
             return new LearningDeliveryPeriodisedValues
+            {
+                AttributeName = attribute,
+                Period1 = value,
+                Period2 = value,
+                Period3 = value,
+                Period4 = value,
+                Period5 = value,
+                Period6 = value,
+                Period7 = value,
+                Period8 = value,
+                Period9 = value,
+                Period10 = value,
+                Period11 = value,
+                Period12 = value,
+            };
+        }
+
+        private LearningDeliveryPeriodisedTextValues TestLearningDeliveryPeriodisedAttributesData(string attribute, string value)
+        {
+            return new LearningDeliveryPeriodisedTextValues
             {
                 AttributeName = attribute,
                 Period1 = value,
@@ -939,8 +1035,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeFirstProv1618Pay", Attribute(false, "1.0") },
                     { "PriceEpisodeLSFCash", Attribute(false, "1.0") },
                     { "PriceEpisodeFundLineType", Attribute(false, "1.0") },
-                    { "PriceEpisodeSFAContribPct", Attribute(false, "1.0") },
-                    { "PriceEpisodeLevyNonPayInd", Attribute(false, "1.0") },
+                    { "PriceEpisodeSFAContribPct", Attribute(true, "1.0") },
+                    { "PriceEpisodeLevyNonPayInd", Attribute(true, "1.0") },
                     { "EpisodeEffectiveTNPStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeFirstAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
                     { "PriceEpisodeSecondAdditionalPaymentThresholdDate", Attribute(false, "1.0") },
@@ -956,7 +1052,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service.Tests
                     { "PriceEpisodeAgreeId", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStartDate", Attribute(false, "1.0") },
                     { "PriceEpisodeRedStatusCode", Attribute(false, "1.0") },
-                    { "PriceEpisodeLearnerAdditionalPayment", Attribute(false, "1.0") }
+                    { "PriceEpisodeLearnerAdditionalPayment", Attribute(true, "1.0") }
                 },
 
                 Parent = parent,

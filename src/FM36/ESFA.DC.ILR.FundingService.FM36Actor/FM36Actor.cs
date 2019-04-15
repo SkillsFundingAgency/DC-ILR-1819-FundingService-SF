@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
-            return JsonSerializationService.Serialize(results);
+            return BuildFundingOutput(results);
         }
 
         private FM36Global RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
@@ -62,9 +62,9 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
             {
                 logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
-                externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
-                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
-                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+                externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
+                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
+                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(FM36Actor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
@@ -99,8 +99,7 @@ namespace ESFA.DC.ILR.FundingService.FM36Actor
                     IFundingService<ILearner, FM36Global> fundingService =
                         childLifetimeScope.Resolve<IFundingService<ILearner, FM36Global>>();
 
-                    List<MessageLearner> learners =
-                        JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
+                    var learners = BuildLearners(actorModel.ValidLearners);
 
                     results = fundingService.ProcessFunding(learners, cancellationToken);
 

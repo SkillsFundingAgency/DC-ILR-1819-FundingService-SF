@@ -36,7 +36,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
         [Fact]
         public void MapLearnerPeriodisedValues()
         {
-            var attributeName = "AttributeName";
+            var attributeName = "LnrOnProgPay";
             var learnRefNumber = "LearnRefNumber";
             var period1 = 1.1m;
             var period2 = 1.2m;
@@ -55,7 +55,6 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
 
-            dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LnrOnProgPay")).Returns(attributeName);
             dataEntityAttributeServiceMock.Setup(s => s.GetStringAttributeValue(dataEntity, "LearnRefNumber")).Returns(learnRefNumber);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd1Pay")).Returns(period1);
             dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(dataEntity, "LnrPrd2Pay")).Returns(period2);

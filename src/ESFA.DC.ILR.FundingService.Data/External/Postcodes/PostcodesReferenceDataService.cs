@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -26,38 +27,43 @@ namespace ESFA.DC.ILR.FundingService.Data.External.Postcodes
 
         public IEnumerable<SfaAreaCost> SFAAreaCostsForPostcode(string postcode)
         {
-            _referenceDataCache.SfaAreaCost.TryGetValue(postcode, out IEnumerable<SfaAreaCost> sfaAreaCost);
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
-            return sfaAreaCost ?? _emptySfaAreaCost;
+            return postcodeRoot?.SfaAreaCosts ?? _emptySfaAreaCost;
         }
 
         public IEnumerable<DasDisadvantage> DASDisadvantagesForPostcode(string postcode)
         {
-            _referenceDataCache.DasDisadvantage.TryGetValue(postcode, out IEnumerable<DasDisadvantage> dasDisadvantage);
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
-            return dasDisadvantage ?? _emptyDasDisadvantage;
+            return postcodeRoot?.DasDisadvantages ?? _emptyDasDisadvantage;
         }
 
 
         public IEnumerable<SfaDisadvantage> SFADisadvantagesForPostcode(string postcode)
         {
-            _referenceDataCache.SfaDisadvantage.TryGetValue(postcode, out IEnumerable<SfaDisadvantage> sfaDisadvantage);
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
-            return sfaDisadvantage ?? _emptySfaDisadvantage;
+            return postcodeRoot?.SfaDisadvantages ?? _emptySfaDisadvantage;
         }
 
-        public IEnumerable<EfaDisadvantage> EFADisadvantagesForPostcode(string postcode)
+        public decimal? LatestEFADisadvantagesUpliftForPostcode(string postcode)
         {
-            _referenceDataCache.EfaDisadvantage.TryGetValue(postcode, out IEnumerable<EfaDisadvantage> efaDisadvantages);
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
-            return efaDisadvantages ?? _emptyEfaDisadvantage;
+            return
+                postcodeRoot?
+                .EfaDisadvantages
+                .OrderByDescending(ef => ef.EffectiveFrom)
+                .Select(u => u.Uplift)
+                .FirstOrDefault();
         }
 
         public IEnumerable<CareerLearningPilot> CareerLearningPilotsForPostcode(string postcode)
         {
-            _referenceDataCache.CareerLearningPilot.TryGetValue(postcode, out IEnumerable<CareerLearningPilot> careerLearningPilots);
+            _referenceDataCache.PostcodeRoots.TryGetValue(postcode, out PostcodeRoot postcodeRoot);
 
-            return careerLearningPilots ?? _emptyCareerLearningPilot;
+            return postcodeRoot?.CareerLearningPilots ?? _emptyCareerLearningPilot;
         }
     }
 }

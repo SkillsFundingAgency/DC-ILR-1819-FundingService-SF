@@ -2,6 +2,9 @@
 {
     public static class Attributes
     {
+        public const int FundModel_81 = 81;
+        public const int FundModel_99 = 99;
+
         // Entity
         public const string EntityGlobal = "global";
         public const string EntityLearner = "Learner";

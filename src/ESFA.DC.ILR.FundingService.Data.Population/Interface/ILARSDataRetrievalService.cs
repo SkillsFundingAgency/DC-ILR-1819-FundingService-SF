@@ -36,5 +36,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Interface
         IEnumerable<LARSStandardApprenticeshipFunding> LARSApprenticeshipFundingStandards(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
 
         IEnumerable<LARSFrameworkApprenticeshipFunding> LARSApprenticeshipFundingFrameworks(IEnumerable<LARSApprenticeshipFundingKey> apprenticeshipFundingKeys);
+
+        IDictionary<int, IEnumerable<LARSStandardFunding>> LARSStandardFundingForStandardCodes(IEnumerable<int> standardCodes);
     }
 }

@@ -50,6 +50,8 @@
         public const string OrgFundFactValue = "OrgFundFactValue";
         public const string OrgFundFactType = "OrgFundFactType";
 
+        public const string OrgFundFactorTypeAdultSkills = "Adult Skills";
+
         // Learner
         public const string LearnRefNumber = "LearnRefNumber";
         public const string DateOfBirth = "DateOfBirth";

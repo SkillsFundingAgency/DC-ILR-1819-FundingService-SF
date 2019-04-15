@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
 using Oracle.Determinations.Masquerade.Util;
@@ -10,6 +11,7 @@ namespace ESFA.DC.OPA.Service
     {
         private const string Uncertain = "uncertain";
         private const string True = "true";
+        private const string False = "false";
 
         public object GetAttributeValue(IDataEntity dataEntity, string attributeName)
         {
@@ -55,7 +57,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return int.Parse(attributeString, NumberStyles.AllowDecimalPoint);
+                    return int.Parse(attributeString, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint);
                 }
             }
 
@@ -72,7 +74,7 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return long.Parse(attributeString, NumberStyles.AllowDecimalPoint);
+                    return long.Parse(attributeString, NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint);
                 }
             }
 
@@ -89,11 +91,32 @@ namespace ESFA.DC.OPA.Service
 
                 if (attributeString != Uncertain)
                 {
-                    return decimal.Parse(attributeString);
+                    return decimal.Parse(attributeString, NumberStyles.Float);
                 }
             }
 
-            return null;
+            return 0;
+        }
+
+        public decimal GetDecimalAttributeValue(object attributeValue)
+        {
+            if (attributeValue != null && attributeValue.ToString() != Uncertain)
+            {
+                var stringValue = attributeValue.ToString();
+
+                if (stringValue == True || stringValue == False)
+                {
+                    return stringValue == True ? 1.0m : 0.0m;
+                }
+
+                decimal decValue;
+
+                decimal.TryParse(stringValue, NumberStyles.Float, CultureInfo.InvariantCulture, out decValue);
+
+                return decValue;
+            }
+
+            return 0;
         }
 
         public bool? GetBoolAttributeValue(IDataEntity dataEntity, string attributeName)
@@ -123,6 +146,11 @@ namespace ESFA.DC.OPA.Service
             }
 
             return null;
+        }
+
+        public decimal GetDecimalAttributeValueForPeriod(IAttributeData attributes, DateTime periodDate)
+        {
+            return GetDecimalAttributeValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
         }
     }
 }

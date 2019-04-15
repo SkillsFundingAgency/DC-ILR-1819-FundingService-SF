@@ -1,0 +1,450 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="b145" type="boolean" public-name="DateInCurrentFundYr">
+        <text>
+          <base>the date is in the current funding year</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the current funding year'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p216" type="date" public-name="PeriodStartDate">
+        <text>
+          <base>the period start date</base>
+        </text>
+      </attribute>
+      <attribute name="p217" type="date" public-name="PeriodEndDate">
+        <text>
+          <base>the period end date</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learner" name="the learner" containment-relationship-id="learners" containment-parent-id="global" public-id="">
+      <attribute name="p159" type="number" public-name="LSFHighestAimType">
+        <text>
+          <base>the learner's highest LSF aim type</base>
+        </text>
+      </attribute>
+      <attribute name="p160" type="currency" public-name="LSFHighestRate">
+        <text>
+          <base>the learner's highest LSF rate</base>
+        </text>
+      </attribute>
+      <attribute name="p161" type="date" public-name="LSFEarliestStartDate">
+        <text>
+          <base>the learner's earliest LSF start date</base>
+        </text>
+      </attribute>
+      <attribute name="p163" type="number" public-name="LSFLowestAimSeq">
+        <text>
+          <base>the learner's lowest LSF aim sequence number</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdelivery" name="the learning delivery" containment-relationship-id="learnerslearningdeliveries" containment-parent-id="learner">
+      <attribute name="p120" type="number" public-name="LearnDelFAMCount">
+        <text>
+          <base>the learning delivery's number of FAM records</base>
+        </text>
+      </attribute>
+      <attribute name="p121" type="number" public-name="LearnDelFAMCountStage1">
+        <text>
+          <base>the learning delivery's number of FAM records stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="b96" type="boolean" public-name="ProgAim">
+        <text>
+          <base>the learning delivery is a programme aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a programme aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p122" type="number" public-name="ProgAimCount">
+        <text>
+          <base>the learning delivery's number of programme aim records</base>
+        </text>
+      </attribute>
+      <attribute name="p138" type="date" public-name="PlannedEndDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery's planned end date</base>
+        </text>
+      </attribute>
+      <attribute name="p140" type="date" public-name="ActEndDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery's actual end date</base>
+        </text>
+      </attribute>
+      <attribute name="b109" type="boolean" public-name="PlannedEndDatePeriodIsStartDatePeriod">
+        <text>
+          <base>the learning delivery's planned end date and start date are in the same period</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s planned end date and start date',plural),o('in the same period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p158" type="currency" public-name="LSFRate">
+        <text>
+          <base>the learning delivery's LSF rate</base>
+        </text>
+      </attribute>
+      <attribute name="b126" type="boolean" public-name="LSFRateHighestPriority">
+        <text>
+          <base>the learning delivery's LSF rate is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF rate',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b127" type="boolean" public-name="LSFAimTypeHighestPriority">
+        <text>
+          <base>the learning delivery's LSF aim type is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF aim type',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b128" type="boolean" public-name="LSFStartDateHighestPriority">
+        <text>
+          <base>the learning delivery's LSF start date is the highest priority</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery''s LSF start date',singular),o('the highest priority'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p162" type="number" public-name="LSFAimType">
+        <text>
+          <base>the learning delivery's LSF aim type</base>
+        </text>
+      </attribute>
+      <attribute name="b153" type="boolean" public-name="ComponentAim">
+        <text>
+          <base>the learning delivery is a component aim</base>
+          <parse>s(ver('10.4.2.18'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a component aim'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p205" type="number" public-name="LearnDelEmpStatCount">
+        <text>
+          <base>the learning delivery's number of employment status records</base>
+        </text>
+      </attribute>
+      <attribute name="p206" type="number" public-name="LearnDelEmpStatCountStage1">
+        <text>
+          <base>the learning delivery's number of employment status records stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p214" type="number" public-name="AFinCountStage1">
+        <text>
+          <base>the learning delivery's number of apprenticeship financial records stage 1</base>
+        </text>
+      </attribute>
+      <attribute name="p215" type="number" public-name="AFinCount">
+        <text>
+          <base>the learning delivery's number of apprenticeship financial records</base>
+        </text>
+      </attribute>
+      <attribute name="p223" type="date" public-name="StartDatePeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's start date period</base>
+        </text>
+      </attribute>
+      <attribute name="b165" type="boolean" public-name="YoungAppFirstThresholdMet">
+        <text>
+          <base>the first 16 to 18 incentive threshold was met in the learning delivery</base>
+          <parse>s(ver('10.4.5.40'),v(meet,t(simple,past,normal)),ob('the first 16 to 18 incentive threshold',singular),o('in the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b166" type="boolean" public-name="SmallBusThresholdMet">
+        <text>
+          <base>the small business threshold was met in the learning delivery</base>
+          <parse>s(ver('10.4.4.21'),v(meet,t(simple,past,normal)),ob('the small business threshold',singular),o('in the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p251" type="currency" public-name="YoungAppFirstAmount">
+        <text>
+          <base>the learning delivery's first 16 to 18 incentive amount</base>
+        </text>
+      </attribute>
+      <attribute name="p252" type="currency" public-name="YoungAppSecondAmount">
+        <text>
+          <base>the learning delivery's second 16 to 18 incentive amount</base>
+        </text>
+      </attribute>
+      <attribute name="b167" type="boolean" public-name="YoungAppSecondThresholdMet">
+        <text>
+          <base>the second 16 to 18 incentive threshold was met in the learning delivery</base>
+          <parse>s(ver('10.4.5.40'),v(meet,t(simple,past,normal)),ob('the second 16 to 18 incentive threshold',singular),o('in the learning delivery'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b168" type="boolean" public-name="LearnDelMathEng">
+        <text>
+          <base>the learning delivery is a Maths/English qualification</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Maths/English qualification'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b169" type="boolean" public-name="EmpIdChange">
+        <text>
+          <base>the learning delivery's employer identifier has changed between start and small business threshold</base>
+          <parse>s(ver('10.4.4.21'),v(change,t(simple,present,perfect)),sb('the learning delivery''s employer identifier',singular),o('between start and small business threshold'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b170" type="boolean" public-name="ActualEndDatePeriodIsStartDatePeriod">
+        <text>
+          <base>the learning delivery's actual end date and start date are in the same period</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the learning delivery''s actual end date and start date',plural),o('in the same period'))</parse>
+          <override>
+            <q>is the learning delivery's actual end date and start date in the same period?</q>
+          </override>
+        </text>
+      </attribute>
+      <attribute name="p253" type="number" public-name="SmallBusEmpStatThresholdDate">
+        <text>
+          <base>the learning delivery's applicable employment status on the small business threshold date</base>
+        </text>
+      </attribute>
+      <attribute name="b171" type="boolean" public-name="DateInActEndDatePeriod">
+        <text>
+          <base>the date is in the learning delivery's actual end date period</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the date',singular),o('in the learning delivery''s actual end date period'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p254" type="date" public-name="ActEndPeriodStart">
+        <text>
+          <base>the beginning of the learning delivery's actual end date period</base>
+        </text>
+      </attribute>
+      <attribute name="p305" type="number" public-name="LDFDGovtCont">
+        <text>
+          <base>the learning delivery's financial details govt contribution</base>
+        </text>
+      </attribute>
+      <attribute name="p311" type="currency" public-name="IntCoreGovContUncapped">
+        <text>
+          <base>the learning delivery's interim uncapped core government contribution</base>
+        </text>
+        <props>
+          <prop name="Size">10</prop>
+          <prop name="DecimalPlaces">2</prop>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="b173" type="boolean" public-name="Trailblazer">
+        <text>
+          <base>the learning delivery is a Trailblazer</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('a Trailblazer'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p318" type="currency" public-name="AchIncentive">
+        <text>
+          <base>the learning delivery's achievement incentive amount</base>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p319" type="currency" public-name="CoreGovContCap">
+        <text>
+          <base>the learning delivery's core government contribution cap</base>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p320" type="currency" public-name="SmallBusIncentive">
+        <text>
+          <base>the learning delivery's small business incentive amount</base>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p321" type="currency" public-name="YoungAppIncentive">
+        <text>
+          <base>the learning delivery's 16 to 18 incentive amount</base>
+        </text>
+        <props>
+          <prop name="Temporal">True</prop>
+        </props>
+      </attribute>
+      <attribute name="p323" type="currency" public-name="Interim1618IncAmount">
+        <text>
+          <base>the learning delivery's interim 16 to 18 incentive amount</base>
+        </text>
+      </attribute>
+      <attribute name="p324" type="currency" public-name="InterimAchIncAmount">
+        <text>
+          <base>the learning delivery's interim achievement incentive amount</base>
+        </text>
+      </attribute>
+      <attribute name="p325" type="currency" public-name="InterimAppCoreGovContCap">
+        <text>
+          <base>the learning delivery's interim applicable core government contribution cap value</base>
+        </text>
+      </attribute>
+      <attribute name="p326" type="currency" public-name="InterimSmallBusIncAmount">
+        <text>
+          <base>the learning delivery's interim small business incentive amount</base>
+        </text>
+      </attribute>
+      <attribute name="p327" type="currency" public-name="InterimCoreGovContCap">
+        <text>
+          <base>the learning delivery's interim core government contribution cap</base>
+        </text>
+      </attribute>
+      <attribute name="b190" type="boolean" public-name="EEF2">
+        <text>
+          <base>the learning delivery is EEF 2</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 2'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b191" type="boolean" public-name="EEF3">
+        <text>
+          <base>the learning delivery is EEF 3</base>
+          <parse>s(ver('10.3.0.77'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 3'))</parse>
+        </text>
+      </attribute>
+      <attribute name="b192" type="boolean" public-name="EEF4">
+        <text>
+          <base>the learning delivery is EEF 4</base>
+          <parse>s(ver('10.4.5.40'),v(be,t(simple,present,normal)),sb('the learning delivery',singular),o('EEF 4'))</parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learningdeliveryfam" name="the learning delivery FAM" containment-relationship-id="learningdeliverysfams" containment-parent-id="learningdelivery">
+      <attribute name="p169" type="date" public-name="FAMFromDatePeriodStart">
+        <text>
+          <base>the beginning of the learning delivery FAM's from date period</base>
+        </text>
+      </attribute>
+      <attribute name="p170" type="date" public-name="FAMToDatePeriodStartDayAfter">
+        <text>
+          <base>the beginning of the period the day after the learning delivery FAM's to date</base>
+        </text>
+      </attribute>
+      <attribute name="p197" type="text" public-name="LearnDelFAMTypeUC">
+        <text>
+          <base>the learning delivery FAM's upper case type</base>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="apprenticeshipfinancialrecord" name="the apprenticeship financial record" containment-relationship-id="learningdeliverysapprenticeshipfinancialrecords" containment-parent-id="learningdelivery" public-id="ApprenticeshipFinancialRecord">
+      <attribute name="p213" type="number" public-name="AFinGovtCap">
+        <text>
+          <base>the apprenticeship financial record's standard government cap</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p259" type="number" public-name="AFinActAmount">
+        <text>
+          <base>the apprenticeship financial record's actual amount</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p260" type="text" public-name="AFinTypeUC">
+        <text>
+          <base>the apprenticeship financial record's upper case type</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p275" type="number" public-name="AFinStandardAmount">
+        <text>
+          <base>the apprenticeship financial record's total amount across the standard</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p276" type="number" public-name="AFinCappedGovtContStan">
+        <text>
+          <base>the apprenticeship financial record's capped govt contribution across the standard</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p279" type="date" public-name="AFinPrdEndDate">
+        <text>
+          <base>the apprenticeship financial record's period end date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p281" type="date" public-name="AFinPrvPrdEndDate">
+        <text>
+          <base>the apprenticeship financial record's previous period end date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p282" type="date" public-name="AFinPrdStartDate">
+        <text>
+          <base>the apprenticeship financial record's period start date</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p302" type="number" public-name="AFinUncGovtContStan">
+        <text>
+          <base>the apprenticeship financial record's uncapped govt contribution across the standard</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p303" type="number" public-name="AFinUncGovtCont">
+        <text>
+          <base>the apprenticeship financial record's uncapped govt contribution</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p304" type="number" public-name="AFinCappedGovtCont">
+        <text>
+          <base>the apprenticeship financial record's capped govt contribution</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p308" type="number" public-name="AFinStandardCode">
+        <text>
+          <base>the apprenticeship financial record's standard code</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="p310" type="number" public-name="UnCappedGovtContInPeriod">
+        <text>
+          <base>the apprenticeship financial record's uncapped govt contribution in the period</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+      <attribute name="b172" type="boolean" public-name="IncludeFinDetail">
+        <text>
+          <base>the apprenticeship financial record is to be included</base>
+          <parse>s(ver('10.4.4.21'),v(be,t(simple,present,normal)),sb('the apprenticeship financial record',singular),o('to be included'))</parse>
+        </text>
+      </attribute>
+      <attribute name="p312" type="number" public-name="LowestCodeInPeriod">
+        <text>
+          <base>the apprenticeship financial record's lowest code in the period</base>
+          <parse>
+          </parse>
+        </text>
+      </attribute>
+    </entity>
+    <entity id="learneremploymentstatus" name="the learner employment status" containment-relationship-id="learnersemploymentstatuses" containment-parent-id="learner" public-id="LearnerEmploymentStatus">
+    </entity>
+    <entity id="larsstandardfunding" name="LARS standard funding" containment-relationship-id="larsstandardfundingsforthelearningdelivery" containment-parent-id="learningdelivery" public-id="LARS_StandardFunding">
+      <attribute name="p359" type="date" public-name="SFCalcToDate">
+        <text>
+          <base>LARS standard funding calculated effective to date</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+    <relationship source="global" target="learner" text="the learners" relationship-id="learners" reverse-text="" reverse-relationship-id="global_learners_rev" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learner" target="learningdelivery" text="the learner's learning deliveries" relationship-id="learnerslearningdeliveries" reverse-text="the learner associated with the learning delivery" reverse-relationship-id="learnerassociatedwiththelearningdelivery" type="OneToMany" is-computed="false" is-containment="true" />
+    <relationship source="learningdelivery" target="learningdeliveryfam" is-containment="true" public-id="" reverse-public-id="" text="the learning delivery's FAMs" relationship-id="learningdeliverysfams" reverse-text="the learning delivery associated with the learning delivery FAM" reverse-relationship-id="learningdeliveryassociatedwiththelearningdeliveryfam" type="OneToMany" is-computed="false" />
+    <relationship source="learner" target="learneremploymentstatus" text="the learner's employment statuses" relationship-id="learnersemploymentstatuses" reverse-relationship-id="learnerassociatedwiththelearneremploymentstatus" reverse-text="the learner associated with the learner employment status" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="larsstandardfunding" text="the LARS standard fundings for the learning delivery" relationship-id="larsstandardfundingsforthelearningdelivery" reverse-relationship-id="learningdeliveryforthelarsstandardfunding" reverse-text="the learning delivery for the LARS standard funding" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+    <relationship source="learningdelivery" target="apprenticeshipfinancialrecord" text="the learning delivery's apprenticeship financial records" relationship-id="learningdeliverysapprenticeshipfinancialrecords" reverse-relationship-id="learningdeliveryassociatedwiththeapprenticeshipfinancialrecord" reverse-text="the learning delivery associated with the apprenticeship financial record" type="OneToMany" is-computed="false" is-containment="true" public-id="" reverse-public-id="" />
+  </relationships>
+  <rule-folders />
+</root>

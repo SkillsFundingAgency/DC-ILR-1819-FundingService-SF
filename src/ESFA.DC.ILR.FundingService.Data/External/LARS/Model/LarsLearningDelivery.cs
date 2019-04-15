@@ -10,6 +10,8 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Model
 
         public string LearnAimRefType { get; set; }
 
+        public string LearningDeliveryGenre { get; set; }
+
         public string NotionalNVQLevelv2 { get; set; }
 
         public int? RegulatedCreditValue { get; set; }

@@ -20,6 +20,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
             return _fundingServiceDto
                 .Message?
                 .LearnerDestinationAndProgressions?
+                .Where(dp => !_fundingServiceDto.InvalidLearners.Contains(dp.LearnRefNumber))
                 .ToDictionary(
                     l => l.LearnRefNumber,
                     l => l.DPOutcomes?
@@ -27,6 +28,9 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.File
                         {
                             OutCode = d.OutCode,
                             OutType = d.OutType,
+                            OutCollDate = d.OutCollDate,
+                            OutStartDate = d.OutStartDate,
+                            OutEndDate = d.OutEndDateNullable
                         }).ToList() ?? new List<DPOutcome>() as IEnumerable<DPOutcome>)
                 ?? new Dictionary<string, IEnumerable<DPOutcome>>();
         }

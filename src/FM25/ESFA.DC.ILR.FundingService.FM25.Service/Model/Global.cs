@@ -18,7 +18,7 @@
 
         public string RetentionFactor { get; set; }
 
-        public string SpecialistResources { get; set; }
+        public bool SpecialistResources { get; set; }
 
         public int UKPRN { get; set; }
     }

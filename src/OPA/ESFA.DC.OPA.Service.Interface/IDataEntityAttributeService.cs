@@ -15,8 +15,12 @@ namespace ESFA.DC.OPA.Service.Interface
 
         decimal? GetDecimalAttributeValue(IDataEntity dataEntity, string attributeName);
 
+        decimal GetDecimalAttributeValue(object attribueValue);
+
         bool? GetBoolAttributeValue(IDataEntity dataEntity, string attributeName);
 
         DateTime? GetDateTimeAttributeValue(IDataEntity dataEntity, string attributeName);
+
+        decimal GetDecimalAttributeValueForPeriod(IAttributeData attributes, DateTime periodDate);
     }
 }

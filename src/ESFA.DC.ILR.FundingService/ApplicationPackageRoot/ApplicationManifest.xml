@@ -17,30 +17,63 @@
     <Parameter Name="OrganisationConnectionString" DefaultValue="__OrganisationConnectionString__" />
     <Parameter Name="LargeEmployersConnectionString" DefaultValue="__LargeEmployersConnectionString__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" DefaultValue="__AppsEarningsHistoryConnectionString__" />
+    <Parameter Name="FCSConnectionString" DefaultValue="__FCSDbConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" DefaultValue="" />
     <Parameter Name="AzureBlobConnectionString" DefaultValue="UseDevelopmentStorage=true" />
-    <Parameter Name="AzureBlobContainerName" DefaultValue="ilr-files" />
+    <Parameter Name="AzureBlobContainerName" DefaultValue="ilr1819-files" />
     <Parameter Name="ProcessingServicePlacementConstraints" DefaultValue="" />
-    <Parameter Name="ALBActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="ALBActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="ALBActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="ALBActorService_TargetReplicaSetSize" DefaultValue="1" />
-    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM35ActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="FM35ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM35ActorService_TargetReplicaSetSize" DefaultValue="1" />
-    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="FM25ActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="FM25ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM25ActorService_TargetReplicaSetSize" DefaultValue="1" />
     <Parameter Name="TopicFunding_TaskPerformALBCalculation" DefaultValue="ALB" />
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" DefaultValue="FM25" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" DefaultValue="FM35" />
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" DefaultValue="FM36" />
-    <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" DefaultValue="FM70" />
+    <Parameter Name="TopicFunding_TaskPerformFM81Calculation" DefaultValue="FM81" />
+    <Parameter Name="FM36ActorService_PartitionCount" DefaultValue="100" />
     <Parameter Name="FM36ActorService_MinReplicaSetSize" DefaultValue="1" />
     <Parameter Name="FM36ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM70ActorService_PartitionCount" DefaultValue="100" />
+    <Parameter Name="FM70ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM70ActorService_TargetReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM81ActorService_PartitionCount" DefaultValue="100" />
+    <Parameter Name="FM81ActorService_MinReplicaSetSize" DefaultValue="1" />
+    <Parameter Name="FM81ActorService_TargetReplicaSetSize" DefaultValue="1" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM81ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM70ActorPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides>
+      <ConfigOverride Name="Config">
+        <Settings>
+          <Section Name="LoggerSection">
+            <Parameter Name="LoggerConnectionstring" Value="[LoggerConnectionstring]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ESFA.DC.ILR.FundingService.FM36ActorPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides>
@@ -117,6 +150,7 @@
             <Parameter Name="OrganisationConnectionString" Value="[OrganisationConnectionString]" />
             <Parameter Name="LargeEmployersConnectionString" Value="[LargeEmployersConnectionString]" />
             <Parameter Name="AppsEarningsHistoryConnectionString" Value="[AppsEarningsHistoryConnectionString]" />
+            <Parameter Name="FCSConnectionString" Value="[FCSConnectionString]" />
           </Section>
           <Section Name="AzureStorageSection">
             <Parameter Name="AzureBlobConnectionString" Value="[AzureBlobConnectionString]" />
@@ -127,6 +161,8 @@
             <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="[TopicFunding_TaskPerformFM25Calculation]" />
             <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="[TopicFunding_TaskPerformFM35Calculation]" />
             <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="[TopicFunding_TaskPerformFM36Calculation]" />
+            <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="[TopicFunding_TaskPerformFM70Calculation]" />
+            <Parameter Name="TopicFunding_TaskPerformFM81Calculation" Value="[TopicFunding_TaskPerformFM81Calculation]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -147,21 +183,37 @@
     <Service Name="ALBActorService" GeneratedIdRef="315a37b1-2ec1-4c08-9c37-245fc59f40ca|None">
       <StatefulService ServiceTypeName="ALBActorServiceType" TargetReplicaSetSize="[ALBActorService_TargetReplicaSetSize]" MinReplicaSetSize="[ALBActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[ALBActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
     <Service Name="FM36ActorService" GeneratedIdRef="145a116d-0d14-4330-add9-576457c16a45|None">
       <StatefulService ServiceTypeName="FM36ActorServiceType" TargetReplicaSetSize="[FM36ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM36ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM36ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
     <Service Name="FM35ActorService" GeneratedIdRef="eca4f2d5-fcff-4c7a-842f-91b0f984c4c8|None">
       <StatefulService ServiceTypeName="FM35ActorServiceType" TargetReplicaSetSize="[FM35ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM35ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM35ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
     <Service Name="FM25ActorService" GeneratedIdRef="fa318bfa-3e44-4104-b9da-ea02a7873184|None">
       <StatefulService ServiceTypeName="FM25ActorServiceType" TargetReplicaSetSize="[FM25ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM25ActorService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[FM25ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
+      </StatefulService>
+    </Service>
+    <Service Name="FM70ActorService" GeneratedIdRef="f11ecd77-386e-4cd6-9d42-a6dca3d27bdd|None">
+      <StatefulService ServiceTypeName="FM70ActorServiceType" TargetReplicaSetSize="[FM70ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM70ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM70ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
+      </StatefulService>
+    </Service>
+    <Service Name="FM81ActorService" GeneratedIdRef="59069b03-3704-4fef-abdf-39a1e9484198|None">
+      <StatefulService ServiceTypeName="FM81ActorServiceType" TargetReplicaSetSize="[FM81ActorService_TargetReplicaSetSize]" MinReplicaSetSize="[FM81ActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[FM81ActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+        <PlacementConstraints>[ProcessingServicePlacementConstraints]</PlacementConstraints>
       </StatefulService>
     </Service>
   </DefaultServices>

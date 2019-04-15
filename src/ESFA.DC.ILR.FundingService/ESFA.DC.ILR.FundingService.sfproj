@@ -43,6 +43,8 @@
       <Private>true</Private>
     </ProjectReference>
     <ProjectReference Include="..\FM36\ESFA.DC.ILR.FundingService.FM36Actor\ESFA.DC.ILR.FundingService.FM36Actor.csproj" />
+    <ProjectReference Include="..\FM70\ESFA.DC.ILR.FundingService.FM70Actor\ESFA.DC.ILR.FundingService.FM70Actor.csproj" />
+    <ProjectReference Include="..\FM81\ESFA.DC.ILR.FundingService.FM81Actor\ESFA.DC.ILR.FundingService.FM81Actor.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

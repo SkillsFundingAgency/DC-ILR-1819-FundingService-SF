@@ -32,7 +32,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         public IDictionary<long, IEnumerable<OrgFunding>> OrgFundingsForUkprns(IEnumerable<long> ukprns)
         {
             return OrgFundings
-                    .Where(o => ukprns.Contains(o.UKPRN) && o.FundingFactorType == "Adult Skills").GroupBy(u => u.UKPRN)
+                    .Where(o => ukprns.Contains(o.UKPRN))
+                    .GroupBy(u => u.UKPRN)
                     .ToDictionary(a => a.Key, a => a.Select(OrgFundingFromEntity).ToList() as IEnumerable<OrgFunding>);
         }
 

@@ -11,6 +11,7 @@ using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.Serialization.Interfaces;
 using ESFA.DC.Serialization.Json;
 using ESFA.DC.ServiceFabric.Helpers;
+using Microsoft.ServiceFabric.Actors.Runtime;
 using ActorFundingALBModule = ESFA.DC.ILR.FundingService.ALBActor.Modules.ActorFundingALBModule;
 
 namespace ESFA.DC.ILR.FundingService.ALBActor
@@ -30,7 +31,10 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                 builder.RegisterServiceFabricSupport();
 
                 // Register the actor service.
-                builder.RegisterActor<ALBActor>();
+                builder.RegisterActor<ALBActor>(settings: new ActorServiceSettings
+                {
+                    ActorGarbageCollectionSettings = new ActorGarbageCollectionSettings(30, 30)
+                });
 
                 using (var container = builder.Build())
                 {

@@ -35,6 +35,7 @@
     <Parameter Name="OrganisationConnectionString" Value=""/>
     <Parameter Name="LargeEmployersConnectionString" Value=""/>
     <Parameter Name="AppsEarningsHistoryConnectionString" Value=""/>
+    <Parameter Name="FCSConnectionString" Value=""/>
   </Section>
 
   <Section  Name="TopicAndTaskSection">
@@ -42,6 +43,8 @@
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="FM25" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="FM35"/>
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="FM36"/>
+    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="FM70"/>
+    <Parameter Name="TopicFunding_TaskPerformFM81Calculation" Value="FM81"/>
   </Section>
   
   <Section Name="DataTransportSettings">

@@ -26,6 +26,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public bool? FundStart { get; set; }
 
+        public int? FworkCode { get; set; }
+
         public decimal? LDApplic1618FrameworkUpliftBalancingValue { get; set; }
 
         public decimal? LDApplic1618FrameworkUpliftCompElement { get; set; }
@@ -44,9 +46,11 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public string LearnAimRef { get; set; }
 
+        public DateTime LearnStartDate { get; set; }
+
         public bool? LearnDel1618AtStart { get; set; }
 
-        public decimal? LearnDelAppAccDaysIL { get; set; }
+        public int? LearnDelAppAccDaysIL { get; set; }
 
         public decimal? LearnDelApplicDisadvAmount { get; set; }
 
@@ -66,9 +70,9 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public bool? LearnDelEligDisadvPayment { get; set; }
 
-        public decimal? LearnDelEmpIdFirstAdditionalPaymentThreshold { get; set; }
+        public int? LearnDelEmpIdFirstAdditionalPaymentThreshold { get; set; }
 
-        public decimal? LearnDelEmpIdSecondAdditionalPaymentThreshold { get; set; }
+        public int? LearnDelEmpIdSecondAdditionalPaymentThreshold { get; set; }
 
         public int? LearnDelHistDaysThisApp { get; set; }
 
@@ -90,7 +94,13 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
 
         public int? PlannedTotalDaysIL { get; set; }
 
+        public int? ProgType { get; set; }
+
+        public int? PwayCode { get; set; }
+
         public DateTime? SecondIncentiveThresholdDate { get; set; }
+
+        public int? StdCode { get; set; }
 
         public int? ThresholdDays { get; set; }
 

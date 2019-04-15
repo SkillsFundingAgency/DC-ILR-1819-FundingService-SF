@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.FundingService.Interfaces;
 using ESFA.DC.ILR.FundingService.Orchestrators.Interfaces;
-using ESFA.DC.JobContext;
-using ESFA.DC.JobContext.Interface;
+using ESFA.DC.JobContextManager.Interface;
+using ESFA.DC.JobContextManager.Model;
+using ESFA.DC.JobContextManager.Model.Interface;
 using ESFA.DC.Logging.Interfaces;
 using ExecutionContext = ESFA.DC.Logging.ExecutionContext;
 
 namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
 {
-    public class MessageHandler : IMessageHandler
+    public class MessageHandler : IMessageHandler<JobContextMessage>
     {
         private readonly ILifetimeScope _parentLifeTimeScope;
         private readonly StatelessServiceContext _context;
@@ -23,7 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
             _context = context;
         }
 
-        public async Task<bool> Handle(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
+        public async Task<bool> HandleAsync(JobContextMessage jobContextMessage, CancellationToken cancellationToken)
          {
             try
             {
@@ -47,6 +48,11 @@ namespace ESFA.DC.ILR.FundingService.Stateless.Handlers
 
                 ServiceEventSource.Current.ServiceMessage(_context, "Completed Funding Calc Service");
                 return true;
+            }
+            catch (OutOfMemoryException oom)
+            {
+                Environment.FailFast("Funding Service Out Of Memory", oom);
+                throw;
             }
             catch (Exception ex)
             {

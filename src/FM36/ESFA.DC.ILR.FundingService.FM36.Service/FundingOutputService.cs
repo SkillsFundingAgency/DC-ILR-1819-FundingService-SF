@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output;
@@ -56,6 +57,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             return new FM36Learner()
             {
                 LearnRefNumber = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnRefNumber),
+                ULN = _dataEntityAttributeService.GetLongAttributeValue(dataEntity, Attributes.ULN).Value,
                 LearningDeliveries = dataEntity
                         .Children
                         .Where(e => e.EntityName == Attributes.EntityLearningDelivery)
@@ -78,6 +80,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 AimSeqNumber = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.AimSeqNumber).Value,
                 LearningDeliveryValues = LearningDeliveryAttributeData(dataEntity),
                 LearningDeliveryPeriodisedValues = LearningDeliveryPeriodisedValues(dataEntity),
+                LearningDeliveryPeriodisedTextValues = LearningDeliveryPeriodisedTextValues(dataEntity),
             };
         }
 
@@ -96,6 +99,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 Completed = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.Completed),
                 FirstIncentiveThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.FirstIncentiveThresholdDate),
                 FundStart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.FundStart),
+                FworkCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.FworkCode),
                 LDApplic1618FrameworkUpliftBalancingValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FrameworkUpliftBalancingValue),
                 LDApplic1618FrameworkUpliftCompElement = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FrameworkUpliftCompElement),
                 LDApplic1618FRameworkUpliftCompletionValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FRameworkUpliftCompletionValue),
@@ -106,7 +110,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 LDApplic1618FrameworkUpliftTotalActEarnings = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LDApplic1618FrameworkUpliftTotalActEarnings),
                 LearnAimRef = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnAimRef),
                 LearnDel1618AtStart = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.LearnDel1618AtStart),
-                LearnDelAppAccDaysIL = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelAppAccDaysIL),
+                LearnDelAppAccDaysIL = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelAppAccDaysIL),
                 LearnDelApplicDisadvAmount = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelApplicDisadvAmount),
                 LearnDelApplicEmp1618Incentive = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelApplicEmp1618Incentive),
                 LearnDelApplicEmpDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnDelApplicEmpDate),
@@ -116,8 +120,8 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 LearnDelDaysIL = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelDaysIL),
                 LearnDelDisadAmount = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelDisadAmount),
                 LearnDelEligDisadvPayment = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.LearnDelEligDisadvPayment),
-                LearnDelEmpIdFirstAdditionalPaymentThreshold = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelEmpIdFirstAdditionalPaymentThreshold),
-                LearnDelEmpIdSecondAdditionalPaymentThreshold = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelEmpIdSecondAdditionalPaymentThreshold),
+                LearnDelEmpIdFirstAdditionalPaymentThreshold = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelEmpIdFirstAdditionalPaymentThreshold),
+                LearnDelEmpIdSecondAdditionalPaymentThreshold = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelEmpIdSecondAdditionalPaymentThreshold),
                 LearnDelHistDaysThisApp = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelHistDaysThisApp),
                 LearnDelHistProgEarnings = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.LearnDelHistProgEarnings),
                 LearnDelInitialFundLineType = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.LearnDelInitialFundLineType),
@@ -131,11 +135,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                 LearnDelLearnerAddPayThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnDelLearnerAddPayThresholdDate),
                 LearnDelRedCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.LearnDelRedCode),
                 LearnDelRedStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnDelRedStartDate),
+                LearnStartDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.LearnStartDate).Value,
                 MathEngAimValue = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.MathEngAimValue),
                 OutstandNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.OutstandNumOnProgInstalm),
                 PlannedNumOnProgInstalm = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PlannedNumOnProgInstalm),
                 PlannedTotalDaysIL = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PlannedTotalDaysIL),
+                ProgType = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ProgType),
+                PwayCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.PwayCode),
                 SecondIncentiveThresholdDate = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.SecondIncentiveThresholdDate),
+                StdCode = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.STDCode),
                 ThresholdDays = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.ThresholdDays)
             };
         }
@@ -182,7 +190,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = ConvertValue(attributeValue.Value);
+                    var value = _dataEntityAttributeService.GetDecimalAttributeValue(attributeValue.Value);
 
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
@@ -207,18 +215,80 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period1),
+                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period2),
+                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period3),
+                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period4),
+                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period5),
+                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period6),
+                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period7),
+                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period8),
+                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period9),
+                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period10),
+                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period11),
+                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period12),
+                    });
+                }
+            }
+
+            return learningDeliveryPeriodisedAttributeList;
+        }
+
+        public List<LearningDeliveryPeriodisedTextValues> LearningDeliveryPeriodisedTextValues(IDataEntity learningDelivery)
+        {
+            List<string> attributeList = new List<string>()
+            {
+                Attributes.FundLineType,
+                Attributes.LearnDelContType,
+            };
+
+            List<LearningDeliveryPeriodisedTextValues> learningDeliveryPeriodisedAttributeList = new List<LearningDeliveryPeriodisedTextValues>();
+
+            foreach (var attribute in attributeList)
+            {
+                var attributeValue = learningDelivery.Attributes[attribute];
+
+                var changePoints = attributeValue.Changepoints;
+
+                if (!changePoints.Any())
+                {
+                    var value = ConvertStringValue(attributeValue.Value);
+
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedTextValues
+                    {
+                        AttributeName = attribute,
+                        Period1 = value,
+                        Period2 = value,
+                        Period3 = value,
+                        Period4 = value,
+                        Period5 = value,
+                        Period6 = value,
+                        Period7 = value,
+                        Period8 = value,
+                        Period9 = value,
+                        Period10 = value,
+                        Period11 = value,
+                        Period12 = value,
+                    });
+                }
+
+                if (changePoints.Any())
+                {
+                    learningDeliveryPeriodisedAttributeList.Add(new LearningDeliveryPeriodisedTextValues
+                    {
+                        AttributeName = attribute,
+                        Period1 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period1),
+                        Period2 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period2),
+                        Period3 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period3),
+                        Period4 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period4),
+                        Period5 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period5),
+                        Period6 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period6),
+                        Period7 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period7),
+                        Period8 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period8),
+                        Period9 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period9),
+                        Period10 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period10),
+                        Period11 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period11),
+                        Period12 = GetPeriodAttributeStringValue(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -335,7 +405,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = ConvertValue(attributeValue.Value);
+                    var value = _dataEntityAttributeService.GetDecimalAttributeValue(attributeValue.Value);
 
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
@@ -360,18 +430,18 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
                     priceEpisodePeriodisedAttributeList.Add(new PriceEpisodePeriodisedValues
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period1),
+                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period2),
+                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period3),
+                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period4),
+                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period5),
+                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period6),
+                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period7),
+                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period8),
+                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period9),
+                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period10),
+                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period11),
+                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
@@ -385,12 +455,15 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             {
                 AppIdentifierOutput = _dataEntityAttributeService.GetStringAttributeValue(dataEntity, Attributes.AppIdentifierOutput),
                 AppProgCompletedInTheYearOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.AppProgCompletedInTheYearOutput),
+                BalancingProgAimPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricBalancingProgAimPaymentsInTheYear),
+                CompletionProgAimPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricCompletionProgAimPaymentsInTheYear),
                 HistoricDaysInYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricDaysInYearOutput),
                 HistoricEffectiveTNPStartDateOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricEffectiveTNPStartDateOutput),
                 HistoricEmpIdEndWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdEndWithinYearOutput),
                 HistoricEmpIdStartWithinYearOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricEmpIdStartWithinYearOutput),
                 HistoricFworkCodeOutput = _dataEntityAttributeService.GetIntAttributeValue(dataEntity, Attributes.HistoricFworkCodeOutput),
                 HistoricLearner1618AtStartOutput = _dataEntityAttributeService.GetBoolAttributeValue(dataEntity, Attributes.HistoricLearner1618AtStartOutput),
+                OnProgProgAimPaymentsInTheYear = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricOnProgProgAimPaymentsInTheYear),
                 HistoricPMRAmountOutput = _dataEntityAttributeService.GetDecimalAttributeValue(dataEntity, Attributes.HistoricPMRAmountOutput),
                 HistoricProgrammeStartDateIgnorePathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateIgnorePathwayOutput),
                 HistoricProgrammeStartDateMatchPathwayOutput = _dataEntityAttributeService.GetDateTimeAttributeValue(dataEntity, Attributes.HistoricProgrammeStartDateMatchPathwayOutput),
@@ -411,28 +484,14 @@ namespace ESFA.DC.ILR.FundingService.FM36.Service
             };
         }
 
-        private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
+        private string GetPeriodAttributeStringValue(IAttributeData attributes, DateTime periodDate)
         {
-            var value = ConvertValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
-
-            return value != null ? decimal.Parse(value.ToString()) : value;
+            return ConvertStringValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
         }
 
-        private decimal? ConvertValue(object value)
+        private string ConvertStringValue(object value)
         {
-            if (value != null && value.ToString() != "uncertain")
-            {
-                var stringValue = value.ToString();
-
-                if (stringValue == "true" || stringValue == "false")
-                {
-                    return stringValue == "true" ? 1.0m : 0.0m;
-                }
-
-                return decimal.Parse(stringValue);
-            }
-
-            return null;
+            return value != null && value.ToString() != "uncertain" ? value.ToString() : null;
         }
     }
 }

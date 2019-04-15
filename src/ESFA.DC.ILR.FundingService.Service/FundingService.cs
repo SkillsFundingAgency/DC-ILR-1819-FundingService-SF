@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.FundingService.Service
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            IEnumerable<IDataEntity> outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e));
+            IEnumerable<IDataEntity> outputDataEntities = inputDataEntities.Select(e => _opaService.ExecuteSession(e)).ToList();
 
             cancellationToken.ThrowIfCancellationRequested();
 

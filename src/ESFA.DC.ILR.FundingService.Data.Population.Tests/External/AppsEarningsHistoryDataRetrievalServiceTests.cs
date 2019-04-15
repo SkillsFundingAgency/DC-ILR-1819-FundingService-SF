@@ -5,6 +5,7 @@ using ESFA.DC.Data.AppsEarningsHistory.Model;
 using ESFA.DC.Data.AppsEarningsHistory.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.Data.Population.External;
 using ESFA.DC.ILR.FundingService.Data.Population.Keys;
+using ESFA.DC.ILR.Tests.Model;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -13,6 +14,65 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 {
     public class AppsEarningsHistoryDataRetrievalServiceTests
     {
+        [Fact]
+        public void UniqueFM36Learners()
+        {
+            var message = new TestMessage
+            {
+                Learners = new List<TestLearner>
+                {
+                    new TestLearner
+                    {
+                        LearnRefNumber = "35and36",
+                        ULN = 1,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 35
+                            },
+                            new TestLearningDelivery
+                            {
+                                FundModel = 36
+                            }
+                        }
+                    },
+                    new TestLearner
+                    {
+                        LearnRefNumber = "36",
+                        ULN = 2,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 36
+                            }
+                        }
+                    },
+                    new TestLearner
+                    {
+                        LearnRefNumber = "35",
+                        ULN = 3,
+                        LearningDeliveries = new List<TestLearningDelivery>
+                        {
+                            new TestLearningDelivery
+                            {
+                                FundModel = 35
+                            }
+                        }
+                    }
+                }
+            };
+
+            var learners = NewService().UniqueFM36Learners(message);
+
+            learners.Should().HaveCount(2);
+            learners.Select(l => l.LearnRefNumber).Should().Contain("35and36", "36");
+            learners.Select(l => l.LearnRefNumber).Should().NotContain("35");
+            learners.Where(l => l.LearnRefNumber == "35and36").Select(u => u.ULN).Should().BeEquivalentTo(1);
+            learners.Where(l => l.LearnRefNumber == "36").Select(u => u.ULN).Should().BeEquivalentTo(2);
+        }
+
         [Fact]
         public void AppEarningsHistory()
         {
@@ -90,14 +150,17 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
 
             aecHistories.Should().HaveCount(2);
             aecHistories.Should().ContainKeys(1234567890, 1234567899);
-            aecHistories.SelectMany(v => v.Value).Should().HaveCount(3);
-            aecHistories[1234567890].Should().HaveCount(2);
+            aecHistories.SelectMany(v => v.Value).Should().HaveCount(4);
+            aecHistories[1234567890].Should().HaveCount(3);
             aecHistories[1234567899].Should().HaveCount(1);
         }
 
         [Fact]
-        public void AECLatestInYearEarningsFromEntity()
+        public void AECLatestInYearEarnings_EntityOutputCorrect()
         {
+            var ukprn = 123456;
+            var learners = new List<LearnRefNumberULNKey> { new LearnRefNumberULNKey("123", 1234567890) };
+
             var aec_LatestInYearHistory = new AppsEarningsHistory()
             {
                 AppIdentifier = "1",
@@ -128,11 +191,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
                 STDCode = 19,
                 TotalProgAimPaymentsInTheYear = 20m,
                 UptoEndDate = new DateTime(2018, 8, 1),
-                UKPRN = 21,
-                ULN = 22,
+                UKPRN = 123456,
+                ULN = 1234567890,
             };
 
-            var aecLatestInYearHistory = NewService().AECLatestInYearEarningsFromEntity(aec_LatestInYearHistory);
+            var apps_Histories = new List<AppsEarningsHistory>()
+            {
+               aec_LatestInYearHistory
+            }.AsQueryable();
+
+            var appsEarningHistoryDataRetrievalServiceMock = NewMock();
+
+            appsEarningHistoryDataRetrievalServiceMock.SetupGet(a => a.AecLatestInYearHistory).Returns(apps_Histories);
+
+            var aecHistories = appsEarningHistoryDataRetrievalServiceMock.Object.AppsEarningsHistoryForLearners(ukprn, learners);
+
+            var aecLatestInYearHistory = aecHistories[1234567890].FirstOrDefault();
 
             aecLatestInYearHistory.AppIdentifier.Should().Be(aec_LatestInYearHistory.AppIdentifier);
             aecLatestInYearHistory.AppProgCompletedInTheYearInput.Should().Be(aec_LatestInYearHistory.AppProgCompletedInTheYearInput);
@@ -160,7 +234,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             aecLatestInYearHistory.ProgType.Should().Be(aec_LatestInYearHistory.ProgType);
             aecLatestInYearHistory.PwayCode.Should().Be(aec_LatestInYearHistory.PwayCode);
             aecLatestInYearHistory.STDCode.Should().Be(aec_LatestInYearHistory.STDCode);
-            aecLatestInYearHistory.TotalProgAimPaymentsInTheYear.Should().Be(aec_LatestInYearHistory.STDCode);
+            aecLatestInYearHistory.TotalProgAimPaymentsInTheYear.Should().Be(aec_LatestInYearHistory.TotalProgAimPaymentsInTheYear);
             aecLatestInYearHistory.UptoEndDate.Should().Be(aec_LatestInYearHistory.UptoEndDate);
             aecLatestInYearHistory.UKPRN.Should().Be(aec_LatestInYearHistory.UKPRN);
             aecLatestInYearHistory.ULN.Should().Be(aec_LatestInYearHistory.ULN);

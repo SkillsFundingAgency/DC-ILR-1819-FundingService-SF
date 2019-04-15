@@ -22,13 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Dictionary" Version="0.1.13-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.12-beta0001" />
-    <PackageReference Include="ESFA.DC.JobContext" Version="0.1.16-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.15-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.5-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 

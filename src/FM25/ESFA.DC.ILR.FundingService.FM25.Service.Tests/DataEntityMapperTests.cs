@@ -79,11 +79,28 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 }
             };
 
-            var uplift = 1.0m;
+            var uplift = 1.1m;
+
+            var efaDisadvantageOne = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = 1.0m,
+                EffectiveFrom = new DateTime(2000, 01, 01),
+                EffectiveTo = new DateTime(2015, 07, 31),
+            };
+
+            var efaDisadvatageTwo = new EfaDisadvantage
+            {
+                Postcode = "CV1 2WT",
+                Uplift = uplift,
+                EffectiveFrom = new DateTime(2015, 08, 01),
+                EffectiveTo = new DateTime(2019, 07, 31),
+            };
 
             var efaDisadvantages = new List<EfaDisadvantage>()
             {
-                new EfaDisadvantage() { Uplift = uplift }
+               efaDisadvantageOne,
+               efaDisadvatageTwo
             };
 
             var fileDataServiceMock = new Mock<IFileDataService>();
@@ -92,7 +109,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
-            postcodesReferenceDataServiceMock.Setup(p => p.EFADisadvantagesForPostcode(learner.Postcode)).Returns(efaDisadvantages);
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvatageTwo.Uplift);
 
             var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
@@ -123,7 +140,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 Postcode = "postcode",
             };
 
-            var efaDisadvantages = new List<EfaDisadvantage>();
+            decimal? efaDisadvantagesUplift = null;
 
             var fileDataServiceMock = new Mock<IFileDataService>();
 
@@ -131,7 +148,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
 
             var postcodesReferenceDataServiceMock = new Mock<IPostcodesReferenceDataService>();
 
-            postcodesReferenceDataServiceMock.Setup(p => p.EFADisadvantagesForPostcode(learner.Postcode)).Returns(efaDisadvantages);
+            postcodesReferenceDataServiceMock.Setup(p => p.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode)).Returns(efaDisadvantagesUplift);
 
             var dataEntity = NewService(postcodesReferenceDataService: postcodesReferenceDataServiceMock.Object, fileDataService: fileDataServiceMock.Object).BuildLearnerDataEntity(learner);
 
@@ -151,7 +168,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 PostcodesVersion = "PostcodesVersion",
                 ProgrammeWeighting = "ProgrammeWeighting",
                 RetentionFactor = "RetentionFactor",
-                SpecialistResources = "SpecialistResources",
+                SpecialistResources = true,
                 UKPRN = 1234
             };
 
@@ -188,7 +205,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             var historicLargeProgrammeProportionValue = "HISTORIC LARGE PROGRAMME PROPORTION VALUE";
             var historicProgrammeCostWeightingFactorValue = "HISTORIC PROGRAMME COST WEIGHTING FACTOR VALUE";
             var historicRetentionFactorValue = "HISTORIC RETENTION FACTOR VALUE";
-            var specialistResources = "SPECIALIST RESOURCES VALUE";
+            var specialistResources = true;
 
             var larsRefererenceDataServiceMock = new Mock<ILARSReferenceDataService>();
             var orgReferenceDataServiceMock = new Mock<IOrganisationReferenceDataService>();
@@ -201,7 +218,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
                 new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = effectiveFrom, OrgFundFactor = "HISTORIC LARGE PROGRAMME PROPORTION", OrgFundFactValue = historicLargeProgrammeProportionValue },
                 new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = effectiveFrom, OrgFundFactor = "HISTORIC PROGRAMME COST WEIGHTING FACTOR", OrgFundFactValue = historicProgrammeCostWeightingFactorValue },
                 new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = effectiveFrom, OrgFundFactor = "HISTORIC RETENTION FACTOR", OrgFundFactValue = historicRetentionFactorValue },
-                new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = new DateTime(2017, 1, 1), OrgFundFactor = "SPECIALIST RESOURCES", OrgFundFactValue = specialistResources },
+                new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = new DateTime(2017, 1, 1), OrgFundFactor = "SPECIALIST RESOURCES", OrgFundFactValue = "1" },
                 new OrgFunding() { OrgFundFactType = fundFactorType, OrgFundEffectiveFrom = new DateTime(2017, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
                 new OrgFunding() { OrgFundFactType = "NOT EFA", OrgFundEffectiveFrom = new DateTime(2017, 8, 1), OrgFundFactor = "HISTORIC AREA COST FACTOR" },
                 new OrgFunding() { OrgFundFactType = "NOT EFA",  OrgFundEffectiveFrom = effectiveFrom, OrgFundFactor = "HISTORIC AREA COST FACTOR" },
@@ -257,7 +274,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Tests
             global.PostcodesVersion.Should().Be(postcodesCurrentVersion);
             global.ProgrammeWeighting.Should().Be(null);
             global.RetentionFactor.Should().Be(null);
-            global.SpecialistResources.Should().Be(null);
+            global.SpecialistResources.Should().Be(false);
             global.UKPRN.Should().Be(ukprn);
         }
 

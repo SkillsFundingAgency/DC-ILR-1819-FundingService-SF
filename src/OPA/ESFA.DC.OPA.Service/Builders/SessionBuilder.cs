@@ -74,17 +74,16 @@ namespace ESFA.DC.OPA.Service.Builders
                 SetAttribute(entity, targetInstance, attribute.Key, attribute.Value);
             }
 
-            //// TODO: Come back to this commented block to see if it was neccessary. Turned off during FM36 implementation.
+            var opaChildEntities = entity.GetChildEntities();
 
-            // var opaChildEntities = entity.GetChildEntities();
+            foreach (Entity opaChildEntity in opaChildEntities)
+            {
+                if (!dataEntity.Children.Select(de => de.EntityName).Contains(opaChildEntity.GetName()) && !opaChildEntity.IsInferred())
+                {
+                    targetInstance.MarkContainmentComplete(true, opaChildEntity);
+                }
+            }
 
-            // foreach (Entity opaChildEntity in opaChildEntities)
-            // {
-            //     if (!dataEntity.Children.Select(de => de.EntityName).Contains(opaChildEntity.GetName()))
-            //     {
-            //         targetInstance.MarkContainmentComplete(true, opaChildEntity);
-            //     }
-            // }
             foreach (var childDataEntity in dataEntity.Children)
             {
                 var childInstance = this.MapDataEntityToOpa(childDataEntity, session, targetInstance);

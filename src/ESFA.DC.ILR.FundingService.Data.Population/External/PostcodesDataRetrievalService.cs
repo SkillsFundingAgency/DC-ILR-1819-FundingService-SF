@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.Data.Postcodes.Model.Interfaces;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.Model.Interface;
@@ -10,6 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 {
     public class PostcodesDataRetrievalService : IPostcodesDataRetrievalService
     {
+        private const int ShardSize = 5000;
         private readonly IPostcodes _postcodes;
 
         public PostcodesDataRetrievalService()
@@ -22,6 +26,8 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
         }
 
         public virtual IQueryable<VersionInfo> VersionInfos => _postcodes.VersionInfos;
+
+        public virtual IQueryable<MasterPostcode> MasterPostcodes => _postcodes.MasterPostcodes;
 
         public virtual IQueryable<SFA_PostcodeAreaCost> SfaPostcodeAreaCosts => _postcodes.SFA_PostcodeAreaCost;
 
@@ -39,8 +45,7 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
                 message.Learners.Select(l => l.Postcode)
                 .Union(message.Learners.Select(l => l.PostcodePrior))
                 .Union(message.Learners.Where(l => l.LearningDeliveries != null).SelectMany(l => l.LearningDeliveries).Select(ld => ld.DelLocPostCode))
-                .Distinct()
-                .ToList();
+                .Distinct();
         }
 
         public string CurrentVersion()
@@ -48,99 +53,106 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
             return VersionInfos.OrderByDescending(v => v.VersionNumber).Select(v => v.VersionNumber).FirstOrDefault();
         }
 
-        public IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCostsForPostcodes(IEnumerable<string> postcodes)
+        public IDictionary<string, PostcodeRoot> PostcodeRootsForPostcodes(IEnumerable<string> postcodes)
         {
-            return SfaPostcodeAreaCosts
-                    .Where(p => postcodes.Contains(p.Postcode))
-                    .GroupBy(a => a.Postcode)
-                    .ToDictionary(a => a.Key, a => a.Select(SfaAreaCostFromEntity).ToList() as IEnumerable<SfaAreaCost>);
-        }
+            var postcodeRoots = new List<PostcodeRoot>();
 
-        public SfaAreaCost SfaAreaCostFromEntity(SFA_PostcodeAreaCost entity)
-        {
-            return new SfaAreaCost()
+            var postcodeShards = postcodes.SplitList(ShardSize);
+
+            foreach (var shard in postcodeShards)
             {
-                Postcode = entity.Postcode,
-                AreaCostFactor = entity.AreaCostFactor,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo
-            };
-        }
+                postcodeRoots.AddRange(
+                    MasterPostcodes
+                        .Where(p => shard.Contains(p.Postcode))
+                        .Select(p =>
+                            new PostcodeRoot()
+                            {
+                                Postcode = p.Postcode,
+                            }));
+            }
 
-        public IDictionary<string, IEnumerable<DasDisadvantage>> DasDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            return DasPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(DasDisadvantageFromEntity).ToList() as IEnumerable<DasDisadvantage>);
-        }
-
-        public DasDisadvantage DasDisadvantageFromEntity(DAS_PostcodeDisadvantage entity)
-        {
-            return new DasDisadvantage
+            foreach (var postcodeRootsShard in postcodeRoots.SplitList(ShardSize))
             {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
+                var shardPostcodes = postcodeRootsShard.Select(p => p.Postcode).ToList();
 
-        public IDictionary<string, IEnumerable<SfaDisadvantage>> SfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            return SfaPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(SfaDisadvantageFromEntity).ToList() as IEnumerable<SfaDisadvantage>);
-        }
+                var careerLearningPilots = CareerLearningPilot_Postcodes
+                    .Where(clp => shardPostcodes.Contains(clp.Postcode))
+                    .Select(clp => new CareerLearningPilot()
+                    {
+                        Postcode = clp.Postcode,
+                        AreaCode = clp.AreaCode,
+                        EffectiveFrom = clp.EffectiveFrom,
+                        EffectiveTo = clp.EffectiveTo,
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-        public SfaDisadvantage SfaDisadvantageFromEntity(SFA_PostcodeDisadvantage entity)
-        {
-            return new SfaDisadvantage
-            {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
+                var dasDisadvantages = DasPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(pd => new DasDisadvantage
+                    {
+                        Postcode = pd.Postcode,
+                        Uplift = pd.Uplift,
+                        EffectiveFrom = pd.EffectiveFrom,
+                        EffectiveTo = pd.EffectiveTo,
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-        public IDictionary<string, IEnumerable<EfaDisadvantage>> EfaDisadvantagesForPostcodes(IEnumerable<string> postcodes)
-        {
-            return EfaPostcodeDisadvantages
-                .Where(p => postcodes.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(EfaDisadvantageFromEntity).ToList() as IEnumerable<EfaDisadvantage>);
-        }
+                var efaDisadvantages = EfaPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(ed => new EfaDisadvantage()
+                    {
+                        Postcode = ed.Postcode,
+                        Uplift = ed.Uplift,
+                        EffectiveFrom = ed.EffectiveFrom,
+                        EffectiveTo = ed.EffectiveTo,
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-        public EfaDisadvantage EfaDisadvantageFromEntity(EFA_PostcodeDisadvantage entity)
-        {
-            return new EfaDisadvantage()
-            {
-                Postcode = entity.Postcode,
-                Uplift = entity.Uplift,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
-        }
+                var sfaAreaCosts = SfaPostcodeAreaCosts
+                    .Where(c => shardPostcodes.Contains(c.Postcode))
+                    .Select(ac => new SfaAreaCost()
+                    {
+                        Postcode = ac.Postcode,
+                        AreaCostFactor = ac.AreaCostFactor,
+                        EffectiveFrom = ac.EffectiveFrom,
+                        EffectiveTo = ac.EffectiveTo
+                    })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-        public IDictionary<string, IEnumerable<CareerLearningPilot>> CareerLearningPilotsForPostcodes(IEnumerable<string> postcodes)
-        {
-            return CareerLearningPilot_Postcodes
-                .Where(p => postcodes.Contains(p.Postcode))
-                .GroupBy(a => a.Postcode)
-                .ToDictionary(a => a.Key, a => a.Select(CareerLearningPilotFromEntity).ToList() as IEnumerable<CareerLearningPilot>);
-        }
+                var sfaDisadvantages = SfaPostcodeDisadvantages
+                    .Where(d => shardPostcodes.Contains(d.Postcode))
+                    .Select(pd => new SfaDisadvantage
+                        {
+                            Postcode = pd.Postcode,
+                            Uplift = pd.Uplift,
+                            EffectiveFrom = pd.EffectiveFrom,
+                            EffectiveTo = pd.EffectiveTo,
+                        })
+                    .ToList()
+                    .GroupBy(d => d.Postcode)
+                    .ToCaseInsensitiveDictionary(d => d.Key, g => g.ToList());
 
-        public CareerLearningPilot CareerLearningPilotFromEntity(CareerLearningPilot_Postcode entity)
-        {
-            return new CareerLearningPilot()
-            {
-                Postcode = entity.Postcode,
-                AreaCode = entity.AreaCode,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
+                foreach (var postcodeRoot in postcodeRootsShard)
+                {
+                    var postcode = postcodeRoot.Postcode;
+
+                    postcodeRoot.CareerLearningPilots = careerLearningPilots.ContainsKey(postcode) ? careerLearningPilots[postcode] : new List<CareerLearningPilot>();
+                    postcodeRoot.DasDisadvantages = dasDisadvantages.ContainsKey(postcode) ? dasDisadvantages[postcode] : new List<DasDisadvantage>();
+                    postcodeRoot.EfaDisadvantages = efaDisadvantages.ContainsKey(postcode) ? efaDisadvantages[postcode] : new List<EfaDisadvantage>();
+                    postcodeRoot.SfaAreaCosts = sfaAreaCosts.ContainsKey(postcode) ? sfaAreaCosts[postcode] : new List<SfaAreaCost>();
+                    postcodeRoot.SfaDisadvantages = sfaDisadvantages.ContainsKey(postcode) ? sfaDisadvantages[postcode] : new List<SfaDisadvantage>();
+                }
+            }
+
+            return postcodeRoots.ToCaseInsensitiveDictionary(k => k.Postcode, v => v);
         }
     }
 }

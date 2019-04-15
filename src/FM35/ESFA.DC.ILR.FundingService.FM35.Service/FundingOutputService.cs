@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.Data.Interface;
 using ESFA.DC.ILR.FundingService.FM35.FundingOutput.Model.Output;
@@ -190,7 +191,7 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
 
                 if (!changePoints.Any())
                 {
-                    var value = ConvertValue(attributeValue.Value);
+                    var value = _dataEntityAttributeService.GetDecimalAttributeValue(attributeValue.Value);
 
                     learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedValue
                     {
@@ -215,47 +216,23 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service
                     learningDeliveryPeriodisedAttributesList.Add(new LearningDeliveryPeriodisedValue
                     {
                         AttributeName = attribute,
-                        Period1 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period1),
-                        Period2 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period2),
-                        Period3 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period3),
-                        Period4 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period4),
-                        Period5 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period5),
-                        Period6 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period6),
-                        Period7 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period7),
-                        Period8 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period8),
-                        Period9 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period9),
-                        Period10 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period10),
-                        Period11 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period11),
-                        Period12 = GetPeriodAttributeValue(attributeValue, _internalDataCache.Period12),
+                        Period1 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period1),
+                        Period2 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period2),
+                        Period3 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period3),
+                        Period4 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period4),
+                        Period5 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period5),
+                        Period6 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period6),
+                        Period7 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period7),
+                        Period8 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period8),
+                        Period9 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period9),
+                        Period10 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period10),
+                        Period11 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period11),
+                        Period12 = _dataEntityAttributeService.GetDecimalAttributeValueForPeriod(attributeValue, _internalDataCache.Period12),
                     });
                 }
             }
 
             return learningDeliveryPeriodisedAttributesList;
-        }
-
-        private decimal? GetPeriodAttributeValue(IAttributeData attributes, DateTime periodDate)
-        {
-            var value = ConvertValue(attributes.Changepoints.Where(cp => cp.ChangePoint == periodDate).Select(v => v.Value).SingleOrDefault());
-
-            return value != null ? decimal.Parse(value.ToString()) : value;
-        }
-
-        private decimal? ConvertValue(object value)
-        {
-            if (value != null && value.ToString() != "uncertain")
-            {
-                var stringValue = value.ToString();
-
-                if (stringValue == "true" || stringValue == "false")
-                {
-                    return stringValue == "true" ? 1.0m : 0.0m;
-                }
-
-                return decimal.Parse(stringValue);
-            }
-
-            return null;
         }
     }
 }

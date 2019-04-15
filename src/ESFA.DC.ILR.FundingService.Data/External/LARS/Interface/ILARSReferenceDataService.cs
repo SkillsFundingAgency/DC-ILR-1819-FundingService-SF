@@ -24,5 +24,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS.Interface
         IEnumerable<LARSStandardCommonComponent> LARSStandardCommonComponent(int? standardCode);
 
         IEnumerable<LARSFrameworkCommonComponent> LARSFrameworkCommonComponent(string learnAimRef, int? fworkCode, int? progType, int? pwayCode);
+
+        IEnumerable<LARSStandardFunding> LARSStandardFunding(int? standardCode);
     }
 }

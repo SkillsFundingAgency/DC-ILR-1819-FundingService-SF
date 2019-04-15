@@ -53,26 +53,27 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         {
             var org_Fundings = new List<Org_Funding>()
             {
-                new Org_Funding()
+                new Org_Funding
                 {
                     UKPRN = 1,
-                    FundingFactorType = "Adult Skills",
+                    FundingFactorType = "Adult Skills"
                 },
-                new Org_Funding()
+                new Org_Funding
                 {
                     UKPRN = 2,
                     FundingFactorType = "Adult Skills"
                 },
-                new Org_Funding()
+                new Org_Funding
                 {
                     UKPRN = 2,
+                    FundingFactorType = "EFA 16-19"
                 },
-                new Org_Funding()
+                new Org_Funding
                 {
                     UKPRN = 1,
                     FundingFactorType = "Adult Skills",
                 },
-                new Org_Funding()
+                new Org_Funding
                 {
                     UKPRN = 3,
                 }
@@ -90,9 +91,10 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
             orgFundings.Should().ContainKeys(1, 2);
 
             orgFundings[1].Should().HaveCount(2);
-            orgFundings[2].Should().HaveCount(1);
+            orgFundings[2].Should().HaveCount(2);
 
-            orgFundings.SelectMany(o => o.Value).Should().OnlyContain(v => v.OrgFundFactType == "Adult Skills");
+            orgFundings.SelectMany(o => o.Value).Should().Contain(v => v.OrgFundFactType == "Adult Skills");
+            orgFundings.SelectMany(o => o.Value).Should().Contain(v => v.OrgFundFactType == "EFA 16-19");
         }
 
         private OrganisationDataRetrievalService NewService(IOrganisations organisations = null)

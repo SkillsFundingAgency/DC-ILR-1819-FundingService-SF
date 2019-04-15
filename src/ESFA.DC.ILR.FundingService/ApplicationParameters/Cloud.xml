@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/ESFA.DC.ILR.FundingService" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
-    <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" Value="-1" />
+    <Parameter Name="ESFA.DC.ILR.FundingService.Stateless_InstanceCount" Value="__Funding_Stateless_InstanceCount__" />
     <Parameter Name="AuditQueueName" Value="__AuditQueueName__" />
     <Parameter Name="ServiceBusConnectionString" Value="__ServiceBusConnectionStringServiceFabric__" />
     <Parameter Name="TopicName" Value="__TopicName__" />
@@ -13,6 +13,7 @@
     <Parameter Name="OrganisationConnectionString" Value="__OrganisationsConnectionString__" />
     <Parameter Name="LargeEmployersConnectionString" Value="__LargeEmployerDbConnectionString__" />
     <Parameter Name="AppsEarningsHistoryConnectionString" Value="__AppsEarningsHistoryDbConnectionString__" />
+    <Parameter Name="FCSConnectionString" Value="__FCSDbConnectionString__" />
     <Parameter Name="RedisCacheConnectionString" Value="__RedisCacheConnectionString__" />
     <Parameter Name="AzureBlobConnectionString" Value="__AzureBlobConnectionString__" />
     <Parameter Name="AzureBlobContainerName" Value="__AzureBlobContainerName__" />
@@ -21,5 +22,7 @@
     <Parameter Name="TopicFunding_TaskPerformFM25Calculation" Value="__TopicFunding_TaskPerformFM25Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM35Calculation" Value="__TopicFunding_TaskPerformFM35Calculation__" />
     <Parameter Name="TopicFunding_TaskPerformFM36Calculation" Value="__TopicFunding_TaskPerformFM36Calculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM70Calculation" Value="__TopicFunding_TaskPerformFM70Calculation__" />
+    <Parameter Name="TopicFunding_TaskPerformFM81Calculation" Value="__TopicFunding_TaskPerformFM81Calculation__" />
   </Parameters>
 </Application>

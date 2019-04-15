@@ -1,0 +1,55 @@
+<root schema-version="1" product-version="10.4.2.18">
+  <entities>
+    <entity ref="global">
+      <attribute name="p58" type="date" public-name="CurrentYearLastDay">
+        <text>
+          <base>the current funding year end date</base>
+        </text>
+      </attribute>
+      <attribute name="p59" type="date" public-name="CurrentYearFirstDay">
+        <text>
+          <base>the current funding year start date</base>
+        </text>
+      </attribute>
+      <attribute name="p200" type="date" public-name="TBStartDate">
+        <text>
+          <base>the trailblazer policy start date</base>
+        </text>
+      </attribute>
+      <attribute name="p201" type="currency" public-name="MathsEnglishRate">
+        <text>
+          <base>the Maths/English rate</base>
+        </text>
+      </attribute>
+      <attribute name="p202" type="number" public-name="FirstPeriodExtraInstalments">
+        <text>
+          <base>the number of extra instalments in the first period</base>
+        </text>
+      </attribute>
+      <attribute name="p207" type="number" public-name="YoungAppFirstThresholdDays">
+        <text>
+          <base>the first 16 to 18 incentive threshold days</base>
+        </text>
+      </attribute>
+      <attribute name="p208" type="number" public-name="YoungAppSecondThresholdDays">
+        <text>
+          <base>the second 16 to 18 incentive threshold days</base>
+        </text>
+      </attribute>
+      <attribute name="p209" type="number" public-name="SmallBusThresholdDays">
+        <text>
+          <base>the small business threshold days</base>
+        </text>
+      </attribute>
+    </entity>
+  </entities>
+  <rules />
+  <interactive-items>
+    <folders />
+    <screens />
+    <documents />
+  </interactive-items>
+  <relationships>
+  </relationships>
+  <rule-folders />
+</root>

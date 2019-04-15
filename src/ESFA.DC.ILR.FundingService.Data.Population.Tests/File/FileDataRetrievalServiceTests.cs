@@ -151,6 +151,65 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.File
             learnRefNumber1DpOutcomes.Should().BeEmpty();
         }
 
+        [Fact]
+        public void RetrieveDPOutcomes_ValidLearnersFilter()
+        {
+            var learnRefNumber1 = "learnRefNumber1";
+            var learnRefNumber2 = "learnRefNumber2";
+            var outCode = 1;
+            var outType = "outType";
+
+            var message = new TestMessage()
+            {
+                LearnerDestinationAndProgressions = new List<TestLearnerDestinationAndProgression>()
+                {
+                    new TestLearnerDestinationAndProgression()
+                    {
+                        LearnRefNumber = learnRefNumber1,
+                        DPOutcomes = new List<TestDPOutcome>()
+                        {
+                            new TestDPOutcome()
+                            {
+                                OutCode = outCode,
+                                OutType = outType
+                            }
+                        }
+                    },
+                    new TestLearnerDestinationAndProgression()
+                    {
+                        LearnRefNumber = learnRefNumber2,
+                        DPOutcomes = new List<TestDPOutcome>()
+                        {
+                            new TestDPOutcome(),
+                            new TestDPOutcome(),
+                        }
+                    }
+                }
+            };
+
+            var invalidLearners = new string[] { learnRefNumber2 };
+
+            var fundingServiceDto = new Mock<IFundingServiceDto>();
+
+            fundingServiceDto.SetupGet(fs => fs.Message).Returns(message);
+            fundingServiceDto.SetupGet(fs => fs.InvalidLearners).Returns(invalidLearners);
+
+            var dpOutcomes = NewService(fundingServiceDto.Object).RetrieveDPOutcomes();
+
+            dpOutcomes.Should().HaveCount(1);
+            dpOutcomes.Should().ContainKeys(learnRefNumber1);
+            dpOutcomes.Should().NotContainKey(learnRefNumber2);
+
+            var learnRefNumber1DpOutcomes = dpOutcomes[learnRefNumber1];
+
+            learnRefNumber1DpOutcomes.Should().HaveCount(1);
+
+            var learnRefNumber1DpOutcome = learnRefNumber1DpOutcomes.First();
+
+            learnRefNumber1DpOutcome.OutCode.Should().Be(outCode);
+            learnRefNumber1DpOutcome.OutType.Should().Be(outType);
+        }
+
         private FileDataRetrievalService NewService(IFundingServiceDto fundingServiceDto = null)
         {
             return new FileDataRetrievalService(fundingServiceDto);

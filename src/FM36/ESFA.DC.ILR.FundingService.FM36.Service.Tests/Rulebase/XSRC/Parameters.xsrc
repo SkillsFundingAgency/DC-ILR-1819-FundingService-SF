@@ -36,9 +36,9 @@
           <base>the second additional payment threshold days</base>
         </text>
       </attribute>
-      <attribute name="p215" type="number" public-name="DefaultEmpContPerc">
+      <attribute name="p215" type="number" public-name="DefaultEmpContPercACT2">
         <text>
-          <base>the default employer contribution percentage</base>
+          <base>the default employer contribution percentage for ACT 2</base>
         </text>
       </attribute>
       <attribute name="p216" type="number" public-name="ThresholdMonthsToCompleteWithoutEmployment">
@@ -64,6 +64,16 @@
       <attribute name="p220" type="date" public-name="CareLeaverPolicyStartDate">
         <text>
           <base>the care leaver policy start date</base>
+        </text>
+      </attribute>
+      <attribute name="p221" type="date" public-name="CoInvestPolicyChangeDate">
+        <text>
+          <base>the co-investment policy change date</base>
+        </text>
+      </attribute>
+      <attribute name="p222" type="number" public-name="DefaultEmpContPercACT1">
+        <text>
+          <base>the default employer contribution percentage for ACT 1</base>
         </text>
       </attribute>
     </entity>

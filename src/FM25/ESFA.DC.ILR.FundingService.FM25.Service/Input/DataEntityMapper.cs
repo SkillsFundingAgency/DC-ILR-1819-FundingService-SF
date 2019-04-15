@@ -18,6 +18,9 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
 {
     public class DataEntityMapper : IDataEntityMapper<ILearner>
     {
+        private readonly int _fundModel = Attributes.FundModel_25;
+        private readonly DateTime _orgFundingAppliesFrom = new DateTime(2018, 8, 1);
+
         private readonly ILARSReferenceDataService _larsReferenceDataService;
         private readonly IOrganisationReferenceDataService _organisationReferenceDataService;
         private readonly IPostcodesReferenceDataService _postcodesReferenceDataService;
@@ -35,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         {
             var global = BuildGlobal();
 
-            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == 25)).Select(l => BuildGlobalDataEntity(l, global));
+            var entities = inputModels.Where(l => l.LearningDeliveries.Any(ld => ld.FundModel == _fundModel)).Select(l => BuildGlobalDataEntity(l, global));
 
             return entities.Any() ? entities : new List<IDataEntity> { BuildGlobalDataEntity(null, global) };
         }
@@ -64,7 +67,8 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public IDataEntity BuildLearnerDataEntity(ILearner learner)
         {
             var learnerFamDenormalized = BuildLearnerFAMDenormalized(learner.LearnerFAMs);
-            var efaDisadvantage = _postcodesReferenceDataService.EFADisadvantagesForPostcode(learner.Postcode).FirstOrDefault();
+
+            var efaDisadvantageUplift = _postcodesReferenceDataService.LatestEFADisadvantagesUpliftForPostcode(learner.Postcode);
 
             return new DataEntity(Attributes.EntityLearner)
             {
@@ -82,7 +86,7 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
                     { Attributes.MathGrade, new AttributeData(learner.MathGrade) },
                     { Attributes.PlanEEPHours, new AttributeData(learner.PlanEEPHoursNullable) },
                     { Attributes.PlanLearnHours, new AttributeData(learner.PlanLearnHoursNullable) },
-                    { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantage?.Uplift) },
+                    { Attributes.PostcodeDisadvantageUplift, new AttributeData(efaDisadvantageUplift) },
                     { Attributes.ULN, new AttributeData(learner.ULN) },
                 },
                 Children =
@@ -162,22 +166,20 @@ namespace ESFA.DC.ILR.FundingService.FM25.Service.Input
         public Global BuildGlobal()
         {
             var ukprn = _fileDataService.UKPRN();
-            var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn).Where(f => f.OrgFundFactType == "EFA 16-19").ToList();
-
-            var effectiveFrom = new DateTime(2018, 8, 1); // TODO : Create Academic Year Service
+            var orgFundings = _organisationReferenceDataService.OrganisationFundingForUKPRN(ukprn).Where(f => f.OrgFundFactType == Attributes.OrgFundFactorTypeEFA1619).ToList();
 
             return new Global()
             {
-                AreaCostFactor1618 = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC AREA COST FACTOR")?.OrgFundFactValue,
-                DisadvantageProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC DISADVANTAGE FUNDING PROPORTION")?.OrgFundFactValue,
-                HistoricLargeProgrammeProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC LARGE PROGRAMME PROPORTION")?.OrgFundFactValue,
+                AreaCostFactor1618 = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricAreaCost)?.OrgFundFactValue,
+                DisadvantageProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricDisadvantageFundingProportion)?.OrgFundFactValue,
+                HistoricLargeProgrammeProportion = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricLargeProgProportion)?.OrgFundFactValue,
                 LARSVersion = _larsReferenceDataService.LARSCurrentVersion(),
                 OrgVersion = _organisationReferenceDataService.OrganisationVersion(),
                 PostcodesVersion = _postcodesReferenceDataService.PostcodesCurrentVersion(),
-                ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC PROGRAMME COST WEIGHTING FACTOR")?.OrgFundFactValue,
-                RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == effectiveFrom && f.OrgFundFactor == "HISTORIC RETENTION FACTOR")?.OrgFundFactValue,
-                SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == "SPECIALIST RESOURCES")?.OrgFundFactValue,
-                UKPRN = ukprn,
+                ProgrammeWeighting = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoriProgCostWeigting)?.OrgFundFactValue,
+                RetentionFactor = orgFundings.FirstOrDefault(f => f.OrgFundEffectiveFrom == _orgFundingAppliesFrom && f.OrgFundFactor == Attributes.OrgFundFactorHistoricRetention)?.OrgFundFactValue,
+                SpecialistResources = orgFundings.FirstOrDefault(f => f.OrgFundFactor == Attributes.OrgFundFactorSpecialistResources)?.OrgFundFactValue == "1" ? true : false,
+                UKPRN = ukprn
             };
         }
 

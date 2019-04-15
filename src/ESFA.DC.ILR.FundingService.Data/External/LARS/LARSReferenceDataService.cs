@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Interface;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -91,7 +92,7 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
 
             return _referenceDataCache.LARSFrameworkCommonComponent
                         .Where(lf =>
-                        lf.LearnAimRef == learnAimRef
+                        lf.LearnAimRef.CaseInsensitiveEquals(learnAimRef)
                         && lf.FworkCode == fworkCode
                         && lf.ProgType == progType
                         && lf.PwayCode == pwayCode);
@@ -104,6 +105,18 @@ namespace ESFA.DC.ILR.FundingService.Data.External.LARS
                 .LARSStandardCommonComponent
                 .Where(k => k.Key == standardCode)
                 .Select(v => v.Value).FirstOrDefault();
+        }
+
+        public IEnumerable<LARSStandardFunding> LARSStandardFunding(int? standardCode)
+        {
+            if (standardCode == null)
+            {
+                return null;
+            }
+
+            _referenceDataCache.LARSStandardFundings.TryGetValue((int)standardCode, out IEnumerable<LARSStandardFunding> larsStandardFunding);
+
+            return larsStandardFunding?.Where(la => la.FundingCategory == "StandardTblazer");
         }
     }
 }

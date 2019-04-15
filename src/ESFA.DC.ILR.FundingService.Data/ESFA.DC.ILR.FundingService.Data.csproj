@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1819.Model.Interface" Version="0.1.5-beta0001" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Data.Extensions\ESFA.DC.ILR.FundingService.Data.Extensions.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.Interfaces\ESFA.DC.ILR.FundingService.Interfaces.csproj" />
   </ItemGroup>
 

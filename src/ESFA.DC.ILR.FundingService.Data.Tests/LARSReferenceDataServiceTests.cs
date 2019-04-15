@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.Data.External.LARS;
 using ESFA.DC.ILR.FundingService.Data.External.LARS.Model;
 using ESFA.DC.ILR.FundingService.Data.Interface;
@@ -165,6 +166,22 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
         }
 
         [Fact]
+        public void LARSFrameworkAims_CaseMisMatch()
+        {
+            var learnAimRef = "LEARNAIMREF";
+            var frameworkAims = new List<LARSFrameworkAims>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkAims).Returns(new Dictionary<string, IEnumerable<LARSFrameworkAims>>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "LearnAimRef", frameworkAims },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef(learnAimRef).Should().BeSameAs(frameworkAims);
+        }
+
+        [Fact]
         public void LARSFrameworkAims_Correct()
         {
             var referenceDataCacheMock = new Mock<IExternalDataCache>();
@@ -175,6 +192,278 @@ namespace ESFA.DC.ILR.FundingService.Data.Tests
             });
 
             NewService(referenceDataCacheMock.Object).LARSFFrameworkAimsForLearnAimRef("notLearnAimRef").Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardApprenticeshipFunding()
+        {
+            int? stdCode = 1;
+            int? progType = 2;
+            var standardApprenticeshipFunding = new List<LARSStandardApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingStandards).Returns(standardApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSStandardApprenticeshipFunding(stdCode, progType).Should().BeEquivalentTo(standardApprenticeshipFunding);
+        }
+
+        [Fact]
+        public void LARSStandardApprenticeshipFunding_NullStdCode()
+        {
+            int? progType = 2;
+            var standardApprenticeshipFunding = new List<LARSStandardApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingStandards).Returns(standardApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSStandardApprenticeshipFunding(null, progType).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardApprenticeshipFunding_NullProgType()
+        {
+            int? stdCode = 1;
+            var standardApprenticeshipFunding = new List<LARSStandardApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingStandards).Returns(standardApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSStandardApprenticeshipFunding(stdCode, null).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkApprenticeshipFunding()
+        {
+            int? stdCode = 1;
+            int? progType = 2;
+            int? pwayCode = 3;
+            var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingFrameworks).Returns(frameworkApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkApprenticeshipFunding(stdCode, progType, pwayCode).Should().BeEquivalentTo(frameworkApprenticeshipFunding);
+        }
+
+        [Fact]
+        public void LARSFrameworkApprenticeshipFunding_NullStdCode()
+        {
+            int? progType = 2;
+            int? pwayCode = 3;
+            var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingFrameworks).Returns(frameworkApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkApprenticeshipFunding(null, progType, pwayCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkApprenticeshipFunding_NullProgType()
+        {
+            int? stdCode = 1;
+            int? pwayCode = 3;
+            var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingFrameworks).Returns(frameworkApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkApprenticeshipFunding(stdCode, null, pwayCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkApprenticeshipFunding_NullPwayCode()
+        {
+            int? stdCode = 1;
+            int? progType = 2;
+            var frameworkApprenticeshipFunding = new List<LARSFrameworkApprenticeshipFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSApprenticeshipFundingFrameworks).Returns(frameworkApprenticeshipFunding);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkApprenticeshipFunding(stdCode, progType, null).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardCommonComponent()
+        {
+            int? stdCode = 1;
+            IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardCommonComponent).Returns(new Dictionary<int, IEnumerable<LARSStandardCommonComponent>>()
+            {
+                { 1, larsStandardCommonComponent },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardCommonComponent(stdCode).Should().BeSameAs(larsStandardCommonComponent);
+        }
+
+        [Fact]
+        public void LARSStandardCommonComponent_NotExists()
+        {
+            int? stdCode = 2;
+            IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardCommonComponent).Returns(new Dictionary<int, IEnumerable<LARSStandardCommonComponent>>()
+            {
+                { 1, larsStandardCommonComponent },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardCommonComponent(stdCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardCommonComponent_NotExistsNull()
+        {
+            IEnumerable<LARSStandardCommonComponent> larsStandardCommonComponent = new List<LARSStandardCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardCommonComponent).Returns(new Dictionary<int, IEnumerable<LARSStandardCommonComponent>>()
+            {
+                { 1, larsStandardCommonComponent },
+            });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardCommonComponent(null).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkCommonComponent()
+        {
+            var learnAimRef = "LearnAimRef";
+            int? fworkCode = 1;
+            int? progType = 2;
+            int? pwayCode = 3;
+            IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkCommonComponent).Returns(larsFrameworkCommonComponent);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkCommonComponent(learnAimRef, fworkCode, progType, pwayCode).Should().BeEquivalentTo(larsFrameworkCommonComponent);
+        }
+
+        [Fact]
+        public void LARSFrameworkCommonComponentNull_LearnAimRef()
+        {
+            int? fworkCode = 1;
+            int? progType = 2;
+            int? pwayCode = 3;
+            IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkCommonComponent).Returns(larsFrameworkCommonComponent);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkCommonComponent(null, fworkCode, progType, pwayCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkCommonComponentNullLearn_FworkCode()
+        {
+            var learnAimRef = "LearnAimRef";
+            int? progType = 2;
+            int? pwayCode = 3;
+            IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkCommonComponent).Returns(larsFrameworkCommonComponent);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkCommonComponent(learnAimRef, null, progType, pwayCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkCommonComponentNullLearn_ProgType()
+        {
+            var learnAimRef = "LearnAimRef";
+            int? fworkCode = 1;
+            int? pwayCode = 3;
+            IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkCommonComponent).Returns(larsFrameworkCommonComponent);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkCommonComponent(learnAimRef, fworkCode, null, pwayCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSFrameworkCommonComponentNullLearn_PwayCode()
+        {
+            var learnAimRef = "LearnAimRef";
+            int? fworkCode = 1;
+            int? progType = 2;
+            IEnumerable<LARSFrameworkCommonComponent> larsFrameworkCommonComponent = new List<LARSFrameworkCommonComponent>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSFrameworkCommonComponent).Returns(larsFrameworkCommonComponent);
+
+            NewService(referenceDataCacheMock.Object).LARSFrameworkCommonComponent(learnAimRef, fworkCode, progType, null).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardFunding()
+        {
+            int? stdCode = 1;
+            IEnumerable<LARSStandardFunding> larsStandardFunding = new List<LARSStandardFunding>
+            { new LARSStandardFunding { FundingCategory = "StandardTblazer" } };
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardFundings)
+                .Returns(new Dictionary<int, IEnumerable<LARSStandardFunding>>()
+                {
+                    { 1, larsStandardFunding },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardFunding(stdCode).Should().BeEquivalentTo(larsStandardFunding);
+        }
+
+        [Fact]
+        public void LARSStandardFunding_NotExists()
+        {
+            int? stdCode = 1;
+            var larsStandardFunding = new List<LARSStandardFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardFundings)
+                .Returns(new Dictionary<int, IEnumerable<LARSStandardFunding>>()
+                {
+                    { 2, larsStandardFunding },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardFunding(stdCode).Should().BeNull();
+        }
+
+        [Fact]
+        public void LARSStandardFunding_NotExists_Null()
+        {
+            var stdCode = 1;
+            var larsStandardFunding = new List<LARSStandardFunding>();
+
+            var referenceDataCacheMock = new Mock<IExternalDataCache>();
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSStandardFundings)
+                .Returns(new Dictionary<int, IEnumerable<LARSStandardFunding>>()
+                {
+                    { stdCode, larsStandardFunding },
+                });
+
+            NewService(referenceDataCacheMock.Object).LARSStandardFunding(null).Should().BeNull();
         }
 
         private LARSReferenceDataService NewService(IExternalDataCache referenceDataCache = null)

@@ -98,20 +98,33 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.Tests.External
         }
 
         [Fact]
-        public void LargeEmployerFromEntity()
+        public void LargeEmployer_EntityOutputCorrect()
         {
-            var lemp_Employers = new LEMP_Employers()
+            var employerIds = new List<int>() { 1 };
+
+            var lemp_Employer = new LEMP_Employers()
             {
                 ERN = 1,
                 EffectiveFrom = new DateTime(2017, 1, 1),
                 EffectiveTo = new DateTime(2018, 1, 1),
             };
 
-            var largeEmployer = NewService().LargeEmployersFromEntity(lemp_Employers);
+            var lemp_Employers = new List<LEMP_Employers>()
+            {
+               lemp_Employer
+            }.AsQueryable();
 
-            largeEmployer.ERN.Should().Be(lemp_Employers.ERN);
-            largeEmployer.EffectiveFrom.Should().Be(lemp_Employers.EffectiveFrom);
-            largeEmployer.EffectiveTo.Should().Be(lemp_Employers.EffectiveTo);
+            var largeEmployersDataRetrievalServiceMock = NewMock();
+
+            largeEmployersDataRetrievalServiceMock.SetupGet(l => l.Employers).Returns(lemp_Employers);
+
+            var largeEmployersDictionary = largeEmployersDataRetrievalServiceMock.Object.LargeEmployersForEmployerIds(employerIds);
+
+            var largeEmployer = largeEmployersDictionary[1].FirstOrDefault();
+
+            largeEmployer.ERN.Should().Be(lemp_Employer.ERN);
+            largeEmployer.EffectiveFrom.Should().Be(lemp_Employer.EffectiveFrom);
+            largeEmployer.EffectiveTo.Should().Be(lemp_Employer.EffectiveTo);
         }
 
         private LargeEmployersDataRetrievalService NewService(ILargeEmployer largeEmployers = null)

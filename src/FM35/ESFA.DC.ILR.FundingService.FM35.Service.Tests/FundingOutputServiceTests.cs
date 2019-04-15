@@ -296,7 +296,12 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
         public void FundingOutput_LearningDeliveryPeriodisedAttributeData_Correct()
         {
             // ARRANGE
-            var fundingOutputService = NewService();
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
+            var fundingOutputService = NewService(dataEntityAttributeService: dataEntityAttributeServiceMock.Object);
 
             // ACT
             var learningDeliveryPeriodisedAttributeData =
@@ -304,9 +309,6 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
-
-            var l = learningDeliveryPeriodisedAttributeData[11];
-            var e = expectedLearningDeliveryPeriodisedAttributeData[11];
 
             expectedLearningDeliveryPeriodisedAttributeData.Should().BeEquivalentTo(learningDeliveryPeriodisedAttributeData);
         }
@@ -329,8 +331,13 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
             internalDataCacheMock.Setup(p => p.Period11).Returns(new DateTime(2019, 6, 1));
             internalDataCacheMock.Setup(p => p.Period12).Returns(new DateTime(2019, 7, 1));
 
+            var dataEntityAttributeServiceMock = new Mock<IDataEntityAttributeService>();
+
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValue(It.IsAny<object>())).Returns(1.0m);
+            dataEntityAttributeServiceMock.Setup(s => s.GetDecimalAttributeValueForPeriod(It.IsAny<IAttributeData>(), It.IsAny<DateTime>())).Returns(1.0m);
+
             var learningDeliveryPeriodisedAttributeData =
-                NewService(internalDataCacheMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
+                NewService(internalDataCacheMock.Object, dataEntityAttributeServiceMock.Object).LearningDeliveryPeriodisedValues(TestLearningDeliveryEntityWithChangePoints(null).Single());
 
             // ASSERT
             var expectedLearningDeliveryPeriodisedAttributeData = TestLearningDeliveryPeriodisedAttributesDataArray();
@@ -540,9 +547,9 @@ namespace ESFA.DC.ILR.FundingService.FM35.Service.Tests
                     { "EmpOutcomePct", Attribute(false, "1.0") },
                     { "EmpOutcomePctTrans", Attribute(false, "1.0") },
                     { "InstPerPeriod", Attribute(false, "1.0") },
-                    { "LearnSuppFund", Attribute(false, "1.0") },
-                    { "LearnSuppFundCash", Attribute(false, "1.0") },
-                    { "OnProgPayment", Attribute(false, "1.0") },
+                    { "LearnSuppFund", Attribute(true, "1.0") },
+                    { "LearnSuppFundCash", Attribute(true, "1.0") },
+                    { "OnProgPayment", Attribute(true, "1.0") },
                     { "OnProgPaymentUncapped", Attribute(false, "1.0") },
                     { "OnProgPayPct", Attribute(false, "1.0") },
                     { "OnProgPayPctTrans", Attribute(false, "1.0") },

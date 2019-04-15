@@ -9,5 +9,7 @@ namespace ESFA.DC.ILR.FundingService.FM36.FundingOutput.Model.Output
         public LearningDeliveryValues LearningDeliveryValues { get; set; }
 
         public List<LearningDeliveryPeriodisedValues> LearningDeliveryPeriodisedValues { get; set; }
+
+        public List<LearningDeliveryPeriodisedTextValues> LearningDeliveryPeriodisedTextValues { get; set; }
     }
 }

@@ -50,10 +50,13 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
             stopWatch.Start();
 
             List<Task<string>> taskList = new List<Task<string>>();
+            List<TActor> actors = new List<TActor>();
 
             foreach (FundingActorDto fundingActorDto in fundingActorDtos)
             {
-                taskList.Add(_fundingActorProvider.Provide().Process(fundingActorDto, cancellationToken));
+                TActor actor = _fundingActorProvider.Provide();
+                actors.Add(actor);
+                taskList.Add(actor.Process(fundingActorDto, cancellationToken));
             }
 
             await Task.WhenAll(taskList).ConfigureAwait(false);
@@ -62,9 +65,22 @@ namespace ESFA.DC.ILR.FundingService.Orchestrators.Implementations
 
             _logger.LogDebug($"Completed {taskList.Count} {_actorName} Actors - {stopWatch.ElapsedMilliseconds}");
 
+            List<Task> tasksDestroy = new List<Task>();
+            foreach (TActor actor in actors)
+            {
+                tasksDestroy.Add(_fundingActorProvider.DestroyAsync(actor, cancellationToken));
+            }
+
+            await Task.WhenAll(tasksDestroy).ConfigureAwait(false);
+
+            _logger.LogDebug($"Destroyed {taskList.Count} {_actorName} Actors - {stopWatch.ElapsedMilliseconds}");
+
             stopWatch.Restart();
 
-            await _keyValuePersistenceService.SaveAsync(outputKey, _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results)), cancellationToken).ConfigureAwait(false);
+            var output = _jsonSerializationService.Serialize(_fundingOutputCondenserService.Condense(results));
+            _logger.LogDebug($"Persisting {_actorName} bytes:{output.Length}");
+
+            await _keyValuePersistenceService.SaveAsync(outputKey, output, cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"Persisted {_actorName} results - {stopWatch.ElapsedMilliseconds}");
         }

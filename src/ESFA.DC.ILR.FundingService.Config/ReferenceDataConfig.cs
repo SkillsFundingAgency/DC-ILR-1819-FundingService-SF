@@ -13,5 +13,7 @@ namespace ESFA.DC.ILR.FundingService.Config
         public string LargeEmployersConnectionString { get; set; }
 
         public string AppsEarningsHistoryConnectionString { get; set; }
+
+        public string FCSConnectionString { get; set; }
     }
 }

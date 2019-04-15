@@ -21,8 +21,9 @@ using ESFA.DC.ILR.FundingService.Stubs;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.IO.Dictionary;
 using ESFA.DC.IO.Interfaces;
-using ESFA.DC.JobContext;
 using ESFA.DC.JobContext.Interface;
+using ESFA.DC.JobContextManager.Model;
+using ESFA.DC.JobContextManager.Model.Interface;
 using ESFA.DC.OPA.Service;
 using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
@@ -48,7 +49,7 @@ namespace ESFA.DC.ILR.FundingService.Console.Modules
             }
         };
 
-        private static ITopicItem TopicItem => new TopicItem("Subscription", "SubscriptionFilter", TaskItemList);
+        private static ITopicItem TopicItem => new TopicItem("Subscription", TaskItemList);
 
         private static IReadOnlyList<ITopicItem> TopicList => new List<ITopicItem> { TopicItem };
 

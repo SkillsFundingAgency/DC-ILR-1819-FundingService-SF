@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.Data.LargeEmployer.Model;
 using ESFA.DC.Data.LargeEmployer.Model.Interface;
+using ESFA.DC.ILR.FundingService.Data.Extensions;
 using ESFA.DC.ILR.FundingService.Data.External.LargeEmployer.Model;
 using ESFA.DC.ILR.FundingService.Data.Population.Interface;
 using ESFA.DC.ILR.Model.Interface;
@@ -35,20 +37,26 @@ namespace ESFA.DC.ILR.FundingService.Data.Population.External
 
         public IDictionary<int, IEnumerable<LargeEmployers>> LargeEmployersForEmployerIds(IEnumerable<int> employerIds)
         {
-            return Employers
-                .Where(l => employerIds.Contains(l.ERN))
-                .GroupBy(e => e.ERN)
-                .ToDictionary(a => a.Key, a => a.Select(LargeEmployersFromEntity).ToList() as IEnumerable<LargeEmployers>);
-        }
+           var employersList = new List<LargeEmployers>();
 
-        public LargeEmployers LargeEmployersFromEntity(LEMP_Employers entity)
-        {
-            return new LargeEmployers
+            var employerShards = employerIds.SplitList(5000);
+
+            foreach (var shard in employerShards)
             {
-                ERN = entity.ERN,
-                EffectiveFrom = entity.EffectiveFrom,
-                EffectiveTo = entity.EffectiveTo,
-            };
+                employersList.AddRange(
+                    Employers
+                    .Where(l => shard.Contains(l.ERN))
+                    .Select(lemp => new LargeEmployers
+                    {
+                        ERN = lemp.ERN,
+                        EffectiveFrom = lemp.EffectiveFrom,
+                        EffectiveTo = lemp.EffectiveTo,
+                    }).ToList());
+            }
+
+            return employersList
+                .GroupBy(e => e.ERN)
+               .ToDictionary(k => k.Key, v => v.ToList() as IEnumerable<LargeEmployers>);
         }
     }
 }

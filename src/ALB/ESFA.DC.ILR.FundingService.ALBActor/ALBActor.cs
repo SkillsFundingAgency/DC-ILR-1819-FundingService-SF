@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 
-            return JsonSerializationService.Serialize(results);
+            return BuildFundingOutput(results);
         }
 
         private ALBGlobal RunFunding(FundingActorDto actorModel, CancellationToken cancellationToken)
@@ -62,9 +62,9 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
             {
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} starting");
 
-                externalDataCache = JsonSerializationService.Deserialize<ExternalDataCache>(actorModel.ExternalDataCache);
-                internalDataCache = JsonSerializationService.Deserialize<InternalDataCache>(actorModel.InternalDataCache);
-                fileDataCache = JsonSerializationService.Deserialize<FileDataCache>(actorModel.FileDataCache);
+                externalDataCache = BuildExternalDataCache(actorModel.ExternalDataCache);
+                internalDataCache = BuildInternalDataCache(actorModel.InternalDataCache);
+                fileDataCache = BuildFileDataCache(actorModel.FileDataCache);
 
                 logger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} finished getting input data");
 
@@ -94,7 +94,7 @@ namespace ESFA.DC.ILR.FundingService.ALBActor
                     jobLogger.LogDebug($"{nameof(ALBActor)} {ActorId} {GC.GetGeneration(actorModel)} started processing");
                     IFundingService<ILearner, ALBGlobal> fundingService = childLifetimeScope.Resolve<IFundingService<ILearner, ALBGlobal>>();
 
-                    List<MessageLearner> learners = JsonSerializationService.Deserialize<List<MessageLearner>>(actorModel.ValidLearners);
+                    var learners = BuildLearners(actorModel.ValidLearners);
 
                     results = fundingService.ProcessFunding(learners, cancellationToken);
 
